@@ -23,6 +23,14 @@ const LISA_RISA_SRC = "/assets/assistant/lisa-risa.png";
 const LISA_SERIA_SRC = "/assets/assistant/lisa-seria.png";
 const LISA_EN_SERIO_SRC = "/assets/assistant/lisa-en-serio.png";
 const LISA_SARCASMO_SRC = "/assets/assistant/lisa-sarcasmo.png";
+export const LISA_FAREWELL_SRC = "/assets/assistant/lisa-farewell.png";
+
+/** Fixed portrait for farewell (not part of micro-reply rotation). */
+export const FAREWELL_GESTURE: AssistantGesture = {
+  id: "smile",
+  src: LISA_FAREWELL_SRC,
+  label: "Lisa — despedida",
+};
 
 /** One or more images per sentiment — random pick when the pool has several files. */
 const SENTIMENT_ASSET_POOLS: Record<AssistantGestureId, readonly string[]> = {
@@ -64,6 +72,16 @@ export const ASSISTANT_GESTURES: readonly AssistantGesture[] = (
   src: SENTIMENT_ASSET_POOLS[id][0]!,
   label: GESTURE_LABELS[id],
 }));
+
+/** Unique Lisa portrait URLs for bootstrap preload. */
+export function assistantPortraitUrls(): readonly string[] {
+  const urls = new Set<string>();
+  for (const pool of Object.values(SENTIMENT_ASSET_POOLS)) {
+    for (const src of pool) urls.add(src);
+  }
+  urls.add(LISA_FAREWELL_SRC);
+  return [...urls];
+}
 
 function pickSentimentAsset(id: AssistantGestureId): string {
   const pool = SENTIMENT_ASSET_POOLS[id];

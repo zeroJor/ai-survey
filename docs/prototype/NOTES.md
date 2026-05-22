@@ -4,6 +4,7 @@ Checklist of UX states and how to trigger them in this prototype.
 
 ## Covered flows
 
+- [x] **Bootstrap loader** — pantalla inicial ~3s (`APP_BOOTSTRAP_MS`): precarga retratos Lisa + mock `GET /api/talk`, anillo AI centrado; fade out al terminar
 - [x] **Privacy** — `/talk` (default scenario): title, body, aviso link, ~15–20 min note
 - [x] **Tone onboarding** — two option cards; Continue without selection → **usted**
 - [x] **Phase 0** — intro copy only, Continue
@@ -13,7 +14,7 @@ Checklist of UX states and how to trigger them in this prototype.
 - [x] **Lisa portraits** — catálogo en [assistant-expression.md](../requierements/assistant-expression.md) §2; assets en `assistantGestures.ts`. Micro-replies: **retrato aleatorio** (prototipo) para revisar todas las expresiones.
 - [ ] **Sentiment + register (tú/usted)** — spec in [assistant-expression.md](../requierements/assistant-expression.md); not split by register yet
 - [x] **Between-phase delight** — shown when `phaseCode` changes (phases 1→2, etc.)
-- [x] **Farewell** — template with `{{contactName}}` / `{{businessName}}`; no edit UI
+- [x] **Farewell** — `lisa-farewell.png` (saludo); template con `{{contactName}}` / `{{businessName}}`; sin edición al reabrir
 - [x] **Progress** — bar on question / micro-reply / transition steps
 - [x] **Reduced motion** — `prefers-reduced-motion` short-circuits CSS transitions in `index.css`
 

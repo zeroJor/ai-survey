@@ -156,12 +156,14 @@ export function paintAssistantAura(
   buds: ActiveBud[],
   animate = true,
   drawScale = 1,
+  ringWidthScale = 1,
 ) {
   const dpr = width > 0 ? ctx.canvas.width / width : 1;
   const cx = width / 2;
   const cy = height / 2;
   const s = drawScale > 0 ? drawScale : 1;
-  const ringWidth = RING_WIDTH_AT_REF * s;
+  const ringBoost = ringWidthScale > 0 ? ringWidthScale : 1;
+  const ringWidth = RING_WIDTH_AT_REF * s * ringBoost;
   const pulse = 1 + breathe * 0.02;
   const rInner = portraitR * pulse;
 
@@ -194,7 +196,7 @@ export function paintAssistantAura(
   ctx.beginPath();
   ctx.arc(cx, cy, rInner, 0, Math.PI * 2);
   ctx.strokeStyle = rgba(RING_ACCENT, 0.4);
-  ctx.lineWidth = Math.max(0.5, RING_WIDTH_AT_REF * 0.2 * s);
+  ctx.lineWidth = Math.max(0.5, RING_WIDTH_AT_REF * 0.2 * s * ringBoost);
   ctx.stroke();
 
   ctx.restore();

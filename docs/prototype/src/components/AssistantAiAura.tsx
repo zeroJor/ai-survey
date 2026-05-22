@@ -18,6 +18,7 @@ export function AssistantAiAura({ children, className = "" }: Props) {
   const startRef = useRef(0);
   const sizeRef = useRef({ w: 0, h: 0, portraitR: 0, drawScale: 1 });
   const budsRef = useRef<ActiveBud[]>([]);
+  const ringWidthScaleRef = useRef(1);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -29,7 +30,17 @@ export function AssistantAiAura({ children, className = "" }: Props) {
 
     let running = true;
 
+    const readRingWidthScale = () => {
+      const raw = getComputedStyle(root)
+        .getPropertyValue("--aura-ring-width-scale")
+        .trim();
+      const v = parseFloat(raw);
+      ringWidthScaleRef.current =
+        Number.isFinite(v) && v > 0 ? v : 1;
+    };
+
     const resize = () => {
+      readRingWidthScale();
       const rect = root.getBoundingClientRect();
       const portraitEl = root.querySelector<HTMLElement>(
         ".assistant-ai-aura-portrait",
@@ -77,6 +88,7 @@ export function AssistantAiAura({ children, className = "" }: Props) {
         budsRef.current,
         animate,
         drawScale,
+        ringWidthScaleRef.current,
       );
 
       if (!reduceMotion) {

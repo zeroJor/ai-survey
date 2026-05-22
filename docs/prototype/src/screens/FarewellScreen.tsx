@@ -2,13 +2,11 @@ import { motion, useReducedMotion } from "framer-motion";
 import { AssistantAiAura } from "../components/AssistantAiAura";
 import { AssistantAvatar } from "../components/AssistantAvatar";
 import { RichText } from "../components/RichText";
-import { gestureById } from "../lib/assistantGestures";
+import { FAREWELL_GESTURE } from "../lib/assistantGestures";
 
 interface Props {
   message: string;
 }
-
-const FAREWELL_GESTURE = gestureById("smile");
 
 export function FarewellScreen({ message }: Props) {
   const reduceMotion = useReducedMotion();

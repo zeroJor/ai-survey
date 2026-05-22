@@ -1,4 +1,7 @@
-import { useCallback, useMemo } from "react";
+import { LayoutGroup, motion, useReducedMotion } from "framer-motion";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { InitialLoader } from "../components/InitialLoader";
+import { useAppBootstrap } from "../hooks/useAppBootstrap";
 import { useAdvanceHotkey } from "../hooks/useAdvanceHotkey";
 import { useLocation } from "react-router-dom";
 import { BackEdgeControl } from "../components/BackEdgeControl";
@@ -19,7 +22,17 @@ import { phaseIntroHoldMs } from "../lib/timing";
 import { fillTemplate } from "../data/mockInvite";
 import type { Register } from "../types";
 
+const APP_REVEAL_EASE = [0.22, 1, 0.36, 1] as const;
+
 export function TalkPage() {
+  const reduceMotion = useReducedMotion();
+  const bootstrapReady = useAppBootstrap();
+  const [handoff, setHandoff] = useState(false);
+  const [loaderDone, setLoaderDone] = useState(false);
+
+  useEffect(() => {
+    if (bootstrapReady) setHandoff(true);
+  }, [bootstrapReady]);
   const location = useLocation();
   const scenario = useMemo(
     () => parseScenario(location.search),
@@ -124,7 +137,9 @@ export function TalkPage() {
         ? `q-${currentQuestion.code}`
         : flowStep;
 
-  return (
+  const auraHandoff = handoff && flowStep === "assistantIntro";
+
+  const interview = (
     <>
       <BackEdgeControl visible={canGoBack} onBack={goBack} />
       <InterviewShell
@@ -137,6 +152,7 @@ export function TalkPage() {
               message={assistantIntroMessage}
               ctaLabel={content.copy.assistantIntroCta}
               onStart={confirmAssistantIntro}
+              bootstrapHandoff={auraHandoff && !loaderDone}
             />
           )}
 
@@ -197,5 +213,39 @@ export function TalkPage() {
 
       <DevScenarioSwitcher current={scenario} />
     </>
+  );
+
+  if (!handoff) {
+    return (
+      <InitialLoader
+        exiting={false}
+        auraHandoff={false}
+        onExited={() => setLoaderDone(true)}
+      />
+    );
+  }
+
+  return (
+    <LayoutGroup id="bootstrap-handoff">
+      <motion.div
+        className="app-reveal"
+        initial={reduceMotion ? false : { opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{
+          duration: reduceMotion ? 0.2 : 0.88,
+          delay: reduceMotion ? 0 : 0.1,
+          ease: APP_REVEAL_EASE,
+        }}
+      >
+        {interview}
+      </motion.div>
+      {!loaderDone && (
+        <InitialLoader
+          exiting
+          auraHandoff={auraHandoff}
+          onExited={() => setLoaderDone(true)}
+        />
+      )}
+    </LayoutGroup>
   );
 }

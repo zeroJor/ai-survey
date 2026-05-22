@@ -258,7 +258,7 @@
   }
 
   .choice-btn {
-    @apply w-full py-7 text-left transition-[color,opacity] duration-300 ease-out lg:py-8;
+    @apply w-full py-7 text-left outline-none transition-[color,opacity] duration-300 ease-out focus:outline-none focus-visible:outline-none lg:py-8;
   }
 
   .choice-list:has(.choice-btn.is-selected) .choice-btn:not(.is-selected) {
@@ -310,8 +310,7 @@
     height: 100%;
   }
 
-  .choice-btn.is-selected .choice-icon,
-  .choice-btn:focus-visible .choice-icon {
+  .choice-btn.is-selected .choice-icon {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
@@ -325,14 +324,8 @@
   }
 
   .choice-btn--casual.is-selected .choice-icon,
-  .choice-btn--casual.is-selected:focus-visible .choice-icon,
-  .choice-btn--formal.is-selected .choice-icon,
-  .choice-btn--formal.is-selected:focus-visible .choice-icon {
+  .choice-btn--formal.is-selected .choice-icon {
     color: var(--accent-ink);
-  }
-
-  .choice-btn:focus-visible:not(.is-selected) .choice-icon {
-    color: var(--muted);
   }
 
   /* —— Assistant avatar —— */
@@ -353,7 +346,7 @@
   }
 
   .micro-reply-avatar.assistant-ai-aura {
-    --aura-portrait: 4.5rem;
+    --aura-portrait: 5.85rem; /* 4.5rem × 1.3 — expressions legibles en reply */
     --aura-halo-scale: 1.62;
   }
 
@@ -532,6 +525,75 @@
   .farewell-copy .welcome-intro-title {
     max-width: min(100%, 34rem);
     margin: 0;
+  }
+
+  /* —— Initial bootstrap loader —— */
+  .initial-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+  }
+
+  .initial-loader-backdrop {
+    position: absolute;
+    inset: 0;
+    background: var(--page);
+  }
+
+  .initial-loader-aura-host {
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .initial-loader-aura-host--center {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .initial-loader-aura.assistant-ai-aura {
+    --aura-portrait: 2.75rem;
+    --aura-halo-scale: 3.25;
+    --aura-ring-width-scale: 1.55;
+  }
+
+  .initial-loader-core {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: var(--page);
+  }
+
+  .welcome-intro-avatar-wrap {
+    grid-column: 1;
+    grid-row: 1 / -1;
+    align-self: start;
+    margin: 0 0.65rem 0 0;
+  }
+
+  .welcome-intro-portrait-reveal,
+  .welcome-intro-copy-reveal {
+    display: contents;
+  }
+
+  .welcome-intro-copy-reveal > .welcome-intro-title {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .welcome-intro-copy-reveal > .welcome-intro-cta {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .app-reveal {
+    min-height: 100dvh;
   }
 
   /* —— AI aura (canvas ring + fused buds) —— */

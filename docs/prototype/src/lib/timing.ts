@@ -9,6 +9,9 @@ const READ_PER_CHAR_MS = 28;
 const MIN_HOLD_MS = 2000;
 const MAX_HOLD_MS = 5000;
 
+/** Prototype: minimum splash while bootstrapping API + assets. */
+export const APP_BOOTSTRAP_MS = 3000;
+
 /** Prototype: fixed backend wait before micro-reply copy appears. */
 export const MICRO_REPLY_LOAD_MS = 1000;
 export const MICRO_REPLY_LOAD_SLOW_MS = 1800;

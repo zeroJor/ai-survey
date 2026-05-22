@@ -9,7 +9,7 @@
 
 Every **micro-reply** is not only text: it must convey a **sentiment** from a **closed list**. The on-screen avatar shows the **image or GIF** registered for that sentiment, in the register the client chose (**casual / tú** vs **formal / usted**).
 
-Farewell and welcome may use a fixed sentiment (e.g. `smile`) but are out of scope for the per-answer loop.
+Farewell and welcome use **fixed** portraits (not the micro-reply catalog). Prototype farewell: `lisa-farewell.png`; welcome: `smile` / `lisa.png`.
 
 ---
 

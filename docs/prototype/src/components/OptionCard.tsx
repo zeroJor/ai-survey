@@ -19,7 +19,10 @@ export function OptionCard({
   return (
     <button
       type="button"
-      onClick={onSelect}
+      onClick={(e) => {
+        onSelect();
+        e.currentTarget.blur();
+      }}
       aria-label={`${tag}. ${hint}`}
       className={[
         "choice-btn",
