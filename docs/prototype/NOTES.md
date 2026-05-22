@@ -43,6 +43,7 @@ Dev panel: fixed bottom **Prototype scenarios** `<select>` reloads the page with
 
 - **Continuar:** barra inferior con separador superior, texto + chevron negros; en `lg+` chevron lateral.
 - Contenido con scroll en `shell-main`; padding inferior en pasos con CTA.
+- **Preguntas (desktop):** textarea ~⅓ del alto, centrado; crece con el texto hasta un máximo (`field-sizing: content`).
 - **Lisa:** arriba y centrada (welcome, micro-reply, farewell); retrato más grande y anillo más fino (`--aura-ring-width-scale` ~0.56).
 - **Títulos de fase:** centrados a mitad de viewport en transiciones entre secciones.
 
