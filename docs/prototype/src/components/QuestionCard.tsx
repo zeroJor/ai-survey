@@ -25,7 +25,7 @@ export function QuestionCard({
 }: Props) {
   const fieldRef = useRef<HTMLTextAreaElement>(null);
   const hasText = body.trim().length > 0;
-  const advanceLabel = useMemo(
+  const barLabel = useMemo(
     () => (hasText ? continueLabel : skipLabel),
     [hasText, continueLabel, skipLabel],
   );
@@ -49,7 +49,11 @@ export function QuestionCard({
       advance={{
         onClick: onContinue,
         disabled: continueDisabled,
-        label: advanceLabel,
+        label: continueLabel,
+        barLabel,
+        skipLabel,
+        showFloatingSkip: !hasText,
+        edgeChevronProminent: hasText,
       }}
       prompt={
         <div className="question-stage">

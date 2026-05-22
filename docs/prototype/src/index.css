@@ -80,6 +80,10 @@
       grid-template-rows: none;
       align-items: stretch;
     }
+
+    .step-with-advance--question .step-answers {
+      justify-content: flex-start;
+    }
   }
 
   .step-with-advance--question .step-answers {
@@ -87,7 +91,7 @@
   }
 
   .step-answers-inner--question {
-    @apply flex min-h-0 flex-1 flex-col;
+    @apply flex min-h-0 flex-1 flex-col items-stretch justify-start;
   }
 
   /* —— Step layout: prompt left, answers/options right —— */
@@ -150,13 +154,15 @@
     @apply lg:pr-28;
   }
 
-  /* —— Advance: mobile full-width bar + desktop edge chevron —— */
+  /* —— Advance: mobile bar (separator only) + desktop edge chevron —— */
   .advance-bar {
     position: fixed;
     left: 0;
     right: 0;
     bottom: 0;
     z-index: 30;
+    border-top: 1px solid var(--line);
+    background: var(--page);
     padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
   }
 
@@ -175,9 +181,9 @@
     align-items: center;
     justify-content: center;
     border: 0;
-    background: var(--ink);
+    background: transparent;
     padding: 0.875rem 0;
-    color: #fff;
+    color: var(--ink);
     cursor: pointer;
     transition: opacity 0.2s ease;
   }
@@ -188,7 +194,7 @@
   }
 
   .advance-bar-label {
-    @apply flex w-full items-center justify-center px-[clamp(3rem,14vw,4.5rem)] text-center font-body text-base font-semibold leading-none tracking-tight;
+    @apply flex w-full items-center justify-center px-[clamp(3rem,14vw,4.5rem)] text-center font-body text-base font-semibold leading-none tracking-tight text-idwa-ink;
   }
 
   .advance-bar-icon {
@@ -203,38 +209,124 @@
     font-size: clamp(2.75rem, 12vw, 3.75rem);
     font-weight: 300;
     line-height: 1;
+    color: var(--ink);
     user-select: none;
     pointer-events: none;
   }
 
+  .advance-edge-zone,
   .advance-btn--edge {
     display: none;
   }
 
   @media (min-width: 1024px) {
-    .advance-btn--edge {
+    .advance-edge-zone {
       position: fixed;
-      right: 1.5rem;
       top: 50%;
+      right: 0;
       z-index: 30;
       display: flex;
-      height: 6.5rem;
-      width: 6.5rem;
+      height: auto;
+      width: 4.5rem;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 0.5rem;
+      transform: translateY(-50%);
+    }
+
+    .advance-edge-zone--skip {
+      width: auto;
+      max-width: min(52vw, 28rem);
+      padding-right: 1.25rem;
+      gap: 0.65rem;
+    }
+
+    .advance-edge-skip {
+      display: flex;
+      align-items: center;
+      align-self: center;
+      width: 0;
+      height: clamp(3.25rem, 8vw, 4.5rem);
+      overflow: hidden;
+      border: 0;
+      background: transparent;
+      padding: 0;
+      cursor: pointer;
+      pointer-events: none;
+      text-align: left;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+    }
+
+    .advance-edge-skip--active {
+      width: auto;
+      overflow: visible;
+      pointer-events: auto;
+      opacity: 1;
+    }
+
+    .advance-edge-skip:hover:not(:disabled) .advance-edge-skip-text {
+      @apply underline decoration-idwa-line underline-offset-[6px];
+    }
+
+    .advance-edge-skip:disabled {
+      cursor: not-allowed;
+      opacity: 0.35;
+    }
+
+    .advance-edge-skip-text {
+      display: block;
+      margin: 0;
+      line-height: clamp(3.25rem, 8vw, 4.5rem);
+      @apply whitespace-nowrap font-display text-[clamp(1.5rem,3.25vw,2.25rem)] font-medium tracking-[-0.02em] text-idwa-ink;
+    }
+
+    .advance-edge-skip-text .reply-letter {
+      transform-origin: 50% 50%;
+    }
+
+    .advance-btn--edge {
+      --edge-btn-size: clamp(3.25rem, 8vw, 4.5rem);
+      --edge-icon-size: clamp(3rem, 7vw, 4.25rem);
+      --edge-icon-leading: 1;
+      display: flex;
+      width: var(--edge-btn-size);
+      height: var(--edge-btn-size);
+      flex-shrink: 0;
       align-items: center;
       justify-content: center;
       border: 0;
       background: transparent;
       padding: 0;
-      color: var(--ink);
+      color: var(--muted);
       cursor: pointer;
-      transform: translateY(-50%);
       transition:
+        width 0.52s cubic-bezier(0.22, 1, 0.36, 1),
+        height 0.52s cubic-bezier(0.22, 1, 0.36, 1),
+        color 0.22s ease,
         opacity 0.2s ease,
         transform 0.28s cubic-bezier(0.25, 0.1, 0.25, 1);
     }
 
+    .advance-btn--edge--prominent {
+      --edge-btn-size: 6.5rem;
+      --edge-icon-size: clamp(4.5rem, 14vw, 8rem);
+      --edge-icon-leading: 0.85;
+      color: var(--ink);
+    }
+
+    .advance-btn--edge .advance-icon {
+      display: block;
+      font-size: var(--edge-icon-size);
+      line-height: var(--edge-icon-leading);
+      transition: font-size 0.52s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .advance-edge-zone:hover .advance-btn--edge:not(:disabled),
+    .advance-edge-zone:focus-within .advance-btn--edge:not(:disabled),
     .advance-btn--edge:hover:not(:disabled) {
-      transform: translateY(-50%) translateX(6px);
+      color: var(--ink);
+      transform: translateX(6px);
     }
 
     .advance-btn--edge:disabled {
@@ -243,11 +335,16 @@
     }
   }
 
+  @media (min-width: 1024px) and (prefers-reduced-motion: reduce) {
+    .advance-btn--edge,
+    .advance-btn--edge .advance-icon {
+      transition-duration: 0.01ms;
+    }
+  }
+
   .advance-icon {
     font-family: "Barlow Condensed", system-ui, sans-serif;
-    font-size: clamp(4.5rem, 14vw, 8rem);
     font-weight: 300;
-    line-height: 0.85;
     user-select: none;
   }
 
@@ -313,11 +410,17 @@
   }
 
   .answer-field {
-    @apply w-full resize-none border-0 bg-transparent py-4 font-body text-xl font-normal leading-relaxed text-idwa-ink outline-none placeholder:text-idwa-muted/40 lg:text-2xl;
+    @apply w-full resize-none border-0 bg-transparent py-4 text-left font-body text-xl font-normal leading-relaxed text-idwa-ink outline-none placeholder:text-idwa-muted/40 lg:text-2xl;
   }
 
   .answer-field--fill {
     @apply min-h-0 flex-1 py-3;
+  }
+
+  @media (min-width: 1024px) {
+    .step-answers-inner--question {
+      @apply min-h-[min(70vh,42rem)] items-start;
+    }
   }
 
   /* —— Tone choices —— */
@@ -433,9 +536,13 @@
   }
 
   @media (min-width: 1024px) {
+    .micro-reply-speech.welcome-intro-speech {
+      align-items: center;
+    }
+
     .micro-reply-speech > .welcome-intro-avatar {
-      grid-row: 1 / -1;
-      align-self: start;
+      grid-row: 1;
+      align-self: center;
       justify-self: start;
       margin: 0 0.65rem 0 0;
     }
@@ -457,7 +564,9 @@
     .micro-reply-speech .micro-reply-body {
       grid-column: 2;
       grid-row: 1;
+      align-self: center;
       align-items: stretch;
+      justify-content: center;
       text-align: left;
       margin-left: -0.2em;
     }

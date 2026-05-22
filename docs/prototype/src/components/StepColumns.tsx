@@ -5,6 +5,10 @@ interface AdvanceProps {
   onClick: () => void;
   disabled?: boolean;
   label?: string;
+  barLabel?: string;
+  skipLabel?: string;
+  showFloatingSkip?: boolean;
+  edgeChevronProminent?: boolean;
 }
 
 interface Props {
@@ -34,6 +38,10 @@ export function StepColumns({ prompt, answers, advance, layout = "default" }: Pr
           onClick={advance.onClick}
           disabled={advance.disabled}
           label={advance.label}
+          barLabel={advance.barLabel}
+          skipLabel={advance.skipLabel}
+          showFloatingSkip={advance.showFloatingSkip}
+          edgeChevronProminent={advance.edgeChevronProminent}
         />
       )}
     </div>

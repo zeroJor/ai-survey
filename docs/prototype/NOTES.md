@@ -9,7 +9,7 @@ Checklist of UX states and how to trigger them in this prototype.
 - [x] **Tone onboarding** — two option cards; Continue without selection → **usted**
 - [x] **Phase 0** — intro copy only, Continue
 - [x] **Question loop** — all 19 questions from `interview.json`; register drives tu/usted labels
-- [x] **Prefiero no contestar** — barra inferior con ese texto si el campo está vacío; con texto → «Continuar»
+- [x] **Prefiero no contestar** — móvil: barra inferior; desktop: texto gris a la izquierda del chevron al hover si el campo está vacío
 - [x] **Micro-reply** — skeleton then one-line ack; `loading_answer` extends delay
 - [x] **Lisa portraits** — catálogo en [assistant-expression.md](../requierements/assistant-expression.md) §2; assets en `assistantGestures.ts`. Micro-replies: **retrato aleatorio** (prototipo) para revisar todas las expresiones.
 - [ ] **Sentiment + register (tú/usted)** — spec in [assistant-expression.md](../requierements/assistant-expression.md); not split by register yet
@@ -41,7 +41,7 @@ Dev panel: fixed bottom **Prototype scenarios** `<select>` reloads the page with
 
 ## Mobile
 
-- **Continuar:** barra inferior negra a ancho completo con texto + chevron blanco; en `lg+` chevron lateral.
+- **Continuar:** barra inferior con separador superior, texto + chevron negros; en `lg+` chevron lateral.
 - Contenido con scroll en `shell-main`; padding inferior en pasos con CTA.
 - **Lisa:** arriba y centrada (welcome, micro-reply, farewell); retrato más grande y anillo más fino (`--aura-ring-width-scale` ~0.56).
 - **Títulos de fase:** centrados a mitad de viewport en transiciones entre secciones.
