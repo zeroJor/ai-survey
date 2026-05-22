@@ -1,4 +1,14 @@
 import type { AnswerRecord } from "../types";
+import lisaPortrait from "../assets/assistant/lisa.png";
+import lisaThink from "../assets/assistant/lisa-think.png";
+import lisaSorprendida from "../assets/assistant/lisa-sorprendida.png";
+import lisaAtenta from "../assets/assistant/lisa-atenta.png";
+import lisaComplice from "../assets/assistant/lisa-complice.png";
+import lisaRisa from "../assets/assistant/lisa-risa.png";
+import lisaSeria from "../assets/assistant/lisa-seria.png";
+import lisaEnSerio from "../assets/assistant/lisa-en-serio.png";
+import lisaSarcasmo from "../assets/assistant/lisa-sarcasmo.png";
+import lisaFarewell from "../assets/assistant/lisa-farewell.png";
 
 export type AssistantGestureId =
   | "atenta"
@@ -13,17 +23,9 @@ export type AssistantGestureId =
   | "sarcasmo";
 
 /** Default Lisa portrait (until a dedicated asset exists per sentiment). */
-export const LISA_PORTRAIT_SRC = "/assets/assistant/lisa.png";
+export const LISA_PORTRAIT_SRC = lisaPortrait;
 
-const LISA_THINK_SRC = "/assets/assistant/lisa-think.png";
-const LISA_SORPRENDIDA_SRC = "/assets/assistant/lisa-sorprendida.png";
-const LISA_ATENTA_SRC = "/assets/assistant/lisa-atenta.png";
-const LISA_COMPLICE_SRC = "/assets/assistant/lisa-complice.png";
-const LISA_RISA_SRC = "/assets/assistant/lisa-risa.png";
-const LISA_SERIA_SRC = "/assets/assistant/lisa-seria.png";
-const LISA_EN_SERIO_SRC = "/assets/assistant/lisa-en-serio.png";
-const LISA_SARCASMO_SRC = "/assets/assistant/lisa-sarcasmo.png";
-export const LISA_FAREWELL_SRC = "/assets/assistant/lisa-farewell.png";
+export const LISA_FAREWELL_SRC = lisaFarewell;
 
 /** Fixed portrait for farewell (not part of micro-reply rotation). */
 export const FAREWELL_GESTURE: AssistantGesture = {
@@ -34,16 +36,16 @@ export const FAREWELL_GESTURE: AssistantGesture = {
 
 /** One or more images per sentiment — random pick when the pool has several files. */
 const SENTIMENT_ASSET_POOLS: Record<AssistantGestureId, readonly string[]> = {
-  atenta: [LISA_ATENTA_SRC],
+  atenta: [lisaAtenta],
   smile: [LISA_PORTRAIT_SRC],
-  think: [LISA_THINK_SRC],
-  nod: [LISA_SERIA_SRC],
-  sorprendida: [LISA_SORPRENDIDA_SRC],
-  complice: [LISA_COMPLICE_SRC],
-  risa: [LISA_RISA_SRC],
-  seria: [LISA_SERIA_SRC],
-  enSerio: [LISA_EN_SERIO_SRC],
-  sarcasmo: [LISA_SARCASMO_SRC],
+  think: [lisaThink],
+  nod: [lisaSeria],
+  sorprendida: [lisaSorprendida],
+  complice: [lisaComplice],
+  risa: [lisaRisa],
+  seria: [lisaSeria],
+  enSerio: [lisaEnSerio],
+  sarcasmo: [lisaSarcasmo],
 };
 
 export interface AssistantGesture {

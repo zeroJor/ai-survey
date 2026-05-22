@@ -5,7 +5,7 @@ Checklist of UX states and how to trigger them in this prototype.
 ## Covered flows
 
 - [x] **Bootstrap loader** — ~3s: anillo **pequeño** centrado; mismo canvas (`BootstrapAuraDock`) ease-out al slot de Lisa; durante el vuelo: fade-in de Lisa + texto + CTA
-- [x] **Privacy** — `/talk` (default scenario): title, body, aviso link, ~15–20 min note
+- [x] **Privacy** — `/` (default scenario): title, body, aviso link, ~15–20 min note
 - [x] **Tone onboarding** — two option cards; Continue without selection → **usted**
 - [x] **Phase 0** — intro copy only, Continue
 - [x] **Question loop** — all 19 questions from `interview.json`; register drives tu/usted labels
@@ -22,14 +22,14 @@ Checklist of UX states and how to trigger them in this prototype.
 
 | ID | Trigger | Expected behavior |
 |----|---------|-------------------|
-| `default` | `/talk` | Full path from privacy → farewell |
-| `in_progress` | `/talk?scenario=in_progress` | Starts at question 6 (index 5) with 5 saved answers; register **usted** |
-| `completed` | `/talk?scenario=completed` | Farewell only (reopen link) |
-| `revoked` | `/talk?scenario=revoked` | Closed-state title + body |
-| `loading_answer` | `/talk?scenario=loading_answer` | Micro-reply skeleton ~1.8s |
-| `llm_off` | `/talk?scenario=llm_off` | Generic template micro-replies (no LLM-style lines) |
-| `long_answer` | `/talk?scenario=long_answer` | First question textarea pre-filled with long text |
-| `skip_answer` | `/talk?scenario=skip_answer` | First question with skip already active |
+| `default` | `/` | Full path from privacy → farewell |
+| `in_progress` | `?scenario=in_progress` | Starts at question 6 (index 5) with 5 saved answers; register **usted** |
+| `completed` | `?scenario=completed` | Farewell only (reopen link) |
+| `revoked` | `?scenario=revoked` | Closed-state title + body |
+| `loading_answer` | `?scenario=loading_answer` | Micro-reply skeleton ~1.8s |
+| `llm_off` | `?scenario=llm_off` | Generic template micro-replies (no LLM-style lines) |
+| `long_answer` | `?scenario=long_answer` | First question textarea pre-filled with long text |
+| `skip_answer` | `?scenario=skip_answer` | First question with skip already active |
 
 Dev panel: fixed bottom **Prototype scenarios** `<select>` reloads the page with the chosen query param.
 

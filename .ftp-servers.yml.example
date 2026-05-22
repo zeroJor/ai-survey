@@ -1,0 +1,11 @@
+servers:
+  labored-production:
+    host: ftp.example.com
+    user: user@example.com
+    pass: "PUT_PASSWORD_HERE"
+    port: 21
+    remote_root: /public_html
+    base_url: https://example.com
+    projects:
+      my-landing: /public_html
+      interviewer: /public_html/interviewer

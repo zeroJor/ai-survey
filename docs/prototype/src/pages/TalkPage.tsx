@@ -3,7 +3,6 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import type { BootstrapPhase } from "../components/BootstrapAuraDock";
 import { useAppBootstrap } from "../hooks/useAppBootstrap";
 import { useAdvanceHotkey } from "../hooks/useAdvanceHotkey";
-import { useLocation } from "react-router-dom";
 import { DevScenarioSwitcher } from "../components/DevScenarioSwitcher";
 import { InterviewShell } from "../components/InterviewShell";
 import { MicroReplyBubble } from "../components/MicroReplyBubble";
@@ -34,10 +33,9 @@ function usesBootstrapDock(scenario: Scenario): boolean {
 export function TalkPage() {
   const reduceMotion = useReducedMotion();
   const bootstrapReady = useAppBootstrap();
-  const location = useLocation();
   const scenario = useMemo(
-    () => parseScenario(location.search),
-    [location.search],
+    () => parseScenario(window.location.search),
+    [],
   );
   const bootstrapDock = usesBootstrapDock(scenario);
 

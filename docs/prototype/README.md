@@ -1,4 +1,4 @@
-# Client interview prototype (`/talk`)
+# Client interview prototype
 
 Clickable, mobile-first prototype of the Idwasoft pre-discovery interview. **No backend** — mock invite (María / Café Luna) and local state only.
 
@@ -10,7 +10,7 @@ npm install
 npm run dev
 ```
 
-Open the URL Vite prints (default **http://localhost:5180/talk**). If that port is busy, Vite picks the next free port — use that one, not an old tab on 5173.
+Open the URL Vite prints (default **http://localhost:5180/**). If that port is busy, Vite picks the next free port — use that one, not an old tab on 5173.
 
 Build for static preview:
 
@@ -23,7 +23,7 @@ npm run preview
 
 | Step | Route | Notes |
 |------|-------|--------|
-| Privacy | `/talk` | Safety copy + aviso link + time estimate |
+| Privacy | `/` | Safety copy + aviso link + time estimate |
 | Tone onboarding | | Tu / usted cards; default **usted** if Continue without pick |
 | Phase 0 intro | | Script from plantilla |
 | Questions (19) | | One per screen; phase label + section title; skip link |
@@ -36,8 +36,9 @@ npm run preview
 - **Sansation** — headings / phase labels (`font-brand`)
 - **System sans** — question body and textarea
 - **Colors** — `#00B4FF` (primary, vibrant), `#0077FF` (accent text), `#1A1A1A` (body), white background
-- **Pattern** — `public/pattern.svg` (light blue dots)
-- **Logo** — `public/assets/logo-idwasoft.svg`
+- **Pattern** — `src/assets/pattern.svg` (light blue dots)
+- **Logo** — `src/assets/logo-idwasoft.svg`
+- **Lisa portraits** — `src/assets/assistant/*.png` (imported in `assistantGestures.ts`)
 
 ## Content
 
@@ -50,14 +51,14 @@ Use the bottom **Prototype scenarios** switcher or query param `?scenario=`:
 
 | Scenario | URL example |
 |----------|-------------|
-| Happy path | `/talk` |
-| Resume mid-interview | `/talk?scenario=in_progress` |
-| Completed (farewell only) | `/talk?scenario=completed` |
-| Revoked link | `/talk?scenario=revoked` |
-| Slow micro-reply | `/talk?scenario=loading_answer` |
-| LLM off (template replies) | `/talk?scenario=llm_off` |
-| Long answer stress | `/talk?scenario=long_answer` |
-| Skip pre-selected | `/talk?scenario=skip_answer` |
+| Happy path | `/` |
+| Resume mid-interview | `?scenario=in_progress` |
+| Completed (farewell only) | `?scenario=completed` |
+| Revoked link | `?scenario=revoked` |
+| Slow micro-reply | `?scenario=loading_answer` |
+| LLM off (template replies) | `?scenario=llm_off` |
+| Long answer stress | `?scenario=long_answer` |
+| Skip pre-selected | `?scenario=skip_answer` |
 
 Details: [NOTES.md](./NOTES.md).
 

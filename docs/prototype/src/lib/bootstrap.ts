@@ -1,10 +1,9 @@
+import logoIdwasoft from "../assets/logo-idwasoft.svg";
+import patternDots from "../assets/pattern.svg";
 import { assistantPortraitUrls } from "./assistantGestures";
 import { APP_BOOTSTRAP_MS } from "./timing";
 
-const STATIC_ASSETS = [
-  "/assets/logo-idwasoft.svg",
-  "/pattern.svg",
-] as const;
+const STATIC_ASSETS = [logoIdwasoft, patternDots] as const;
 
 function delay(ms: number): Promise<void> {
   return new Promise((resolve) => window.setTimeout(resolve, ms));

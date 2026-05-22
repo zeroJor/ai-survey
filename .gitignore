@@ -18,6 +18,8 @@ Thumbs.db
 !.env.*.example
 *.pem
 auth.json
+.ftp-servers.yml
+!.ftp-servers.yml.example
 
 # PHP / Composer / Laravel
 /vendor/
