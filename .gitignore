@@ -1,0 +1,81 @@
+# OS & editors
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json.example
+*.sublime-project
+*.sublime-workspace
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+auth.json
+
+# PHP / Composer / Laravel
+/vendor/
+composer.phar
+.phpunit.result.cache
+.phpunit.cache/
+phpunit.xml.bak
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+
+# Laravel runtime & build artifacts
+/bootstrap/cache/*
+!/bootstrap/cache/.gitignore
+/storage/*.key
+/storage/pail
+/public/build/
+/public/hot
+/public/storage
+/storage/app/public/*
+!/storage/app/public/.gitignore
+/storage/framework/cache/data/*
+!/storage/framework/cache/data/.gitignore
+/storage/framework/sessions/*
+!/storage/framework/sessions/.gitignore
+/storage/framework/testing/*
+!/storage/framework/testing/.gitignore
+/storage/framework/views/*
+!/storage/framework/views/.gitignore
+/storage/logs/*
+!/storage/logs/.gitignore
+
+# Node / Vite / React (prototype & future SPA)
+node_modules/
+dist/
+build/
+.vite/
+*.local
+.eslintcache
+.stylelintcache
+coverage/
+.nyc_output/
+*.tsbuildinfo
+
+# Docker & local data
+docker-compose.override.yml
+.docker/
+*.sql
+*.sqlite
+*.sqlite-journal
+
+# Logs & temp
+*.log
+logs/
+tmp/
+temp/
+.cache/
+
+# Cursor / agent workspace artifacts (not product source)
+.cursor/
