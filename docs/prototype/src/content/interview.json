@@ -1,0 +1,204 @@
+{
+  "version": "1.0.0",
+  "phases": [
+    {
+      "code": "0",
+      "title": "Introducción",
+      "objective": "Generar confianza",
+      "intro": "El objetivo de esta sesión es sumergirnos por completo en lo que haces todos los días. Hoy no vamos a hablar de pantallas, botones ni colores. Queremos entender a fondo *tu negocio*, tu visión y a las personas que te compran, para que la web sea un reflejo exacto de *tu valor*. No hay respuestas correctas ni incorrectas, solo tu experiencia."
+    },
+    {
+      "code": "1",
+      "title": "El corazón de tu negocio",
+      "objective": "Activar la memoria narrativa con preguntas de bajo impacto emocional"
+    },
+    {
+      "code": "2",
+      "title": "Objetivos de la web",
+      "objective": "Descubrir la necesidad real detrás de la petición del sitio web"
+    },
+    {
+      "code": "3",
+      "title": "Tu cliente ideal",
+      "objective": "Entender quién usa la web y cómo, sin tecnicismos"
+    },
+    {
+      "code": "4",
+      "title": "Marca y referencias",
+      "objective": "Definir el estándar visual mediante la psicología inversa"
+    },
+    {
+      "code": "5",
+      "title": "Logística y expectativas",
+      "objective": "Alinear tiempos y responsabilidades del proyecto"
+    }
+  ],
+  "questions": [
+    {
+      "code": "1.1",
+      "phaseCode": "1",
+      "labelTu": "¿Cómo nació este negocio y qué es lo que más *te enorgullece* de él hoy en día?",
+      "labelUsted": "¿Cómo nació este negocio y qué es lo que más *le enorgullece* de él hoy en día?"
+    },
+    {
+      "code": "1.2",
+      "phaseCode": "1",
+      "labelTu": "Si tuvieras que explicarle a un *niño de 10 años* qué hace tu empresa, ¿cómo se lo dirías en una sola frase?",
+      "labelUsted": "Si tuviera que explicarle a un *niño de 10 años* qué hace su empresa, ¿cómo se lo diría en una sola frase?"
+    },
+    {
+      "code": "1.3",
+      "phaseCode": "1",
+      "labelTu": "Cuando un cliente entra a tu negocio (o te contacta) por *primera vez*, ¿qué es lo primero que suele pedirte o preguntar?",
+      "labelUsted": "Cuando un cliente entra a su negocio (o le contacta) por *primera vez*, ¿qué es lo primero que suele pedirle o preguntar?"
+    },
+    {
+      "code": "1.4",
+      "phaseCode": "1",
+      "labelTu": "De todo lo que ofreces, ¿cuál es ese *servicio estrella* que sabes que cambia las cosas para tus clientes y por qué lo valoran tanto?",
+      "labelUsted": "De todo lo que ofrece, ¿cuál es ese *servicio estrella* que sabe que cambia las cosas para sus clientes y por qué lo valoran tanto?"
+    },
+    {
+      "code": "2.1",
+      "phaseCode": "2",
+      "labelTu": "¿Qué pasó en tu negocio la semana pasada o el mes pasado que te hizo decir: \"Es momento de hacer o cambiar la *página web ya*\"?",
+      "labelUsted": "¿Qué pasó en su negocio la semana pasada o el mes pasado que le hizo decir: \"Es momento de hacer o cambiar la *página web ya*\"?"
+    },
+    {
+      "code": "2.2",
+      "phaseCode": "2",
+      "labelTu": "Si esta página web fuera un *empleado* que acabas de contratar, ¿cuál sería su *tarea principal* de lunes a viernes?",
+      "labelUsted": "Si esta página web fuera un *empleado* que acaba de contratar, ¿cuál sería su *tarea principal* de lunes a viernes?"
+    },
+    {
+      "code": "2.3",
+      "phaseCode": "2",
+      "labelTu": "Imagina que la web ya está lista y lleva tres meses al aire. Me llamas feliz para invitarme un café porque la web fue un *éxito total*. ¿Qué ocurrió específicamente en tu negocio para que te sientas así?",
+      "labelUsted": "Imagine que la web ya está lista y lleva tres meses al aire. Me llama feliz para invitarme un café porque la web fue un *éxito total*. ¿Qué ocurrió específicamente en su negocio para que se sienta así?"
+    },
+    {
+      "code": "2.4",
+      "phaseCode": "2",
+      "labelTu": "¿Qué tarea repetitiva o proceso actual te quita más tiempo a ti o a tu equipo que te gustaría que la web ayudara a *agilizar*?",
+      "labelUsted": "¿Qué tarea repetitiva o proceso actual le quita más tiempo a usted o a su equipo que le gustaría que la web ayudara a *agilizar*?"
+    },
+    {
+      "code": "3.1",
+      "phaseCode": "3",
+      "labelTu": "¿En qué *rango de edad* se encuentra la mayoría de tus clientes actuales?",
+      "labelUsted": "¿En qué *rango de edad* se encuentra la mayoría de sus clientes actuales?"
+    },
+    {
+      "code": "3.2",
+      "phaseCode": "3",
+      "labelTu": "Pensando en la edad que tienen, ¿qué tan acostumbrados están a hacer trámites *en línea*?",
+      "labelUsted": "Pensando en la edad que tienen, ¿qué tan acostumbrados están a hacer trámites *en línea*?"
+    },
+    {
+      "code": "3.3",
+      "phaseCode": "3",
+      "labelTu": "Antes de que un cliente decida contratarte o comprarte, ¿cuál es el *miedo o duda* principal que suele tener?",
+      "labelUsted": "Antes de que un cliente decida contratarle o comprarle, ¿cuál es el *miedo o duda* principal que suele tener?"
+    },
+    {
+      "code": "3.4",
+      "phaseCode": "3",
+      "labelTu": "¿Qué pregunta te hace la gente por *WhatsApp* o correo una y otra vez que te quita tiempo y podrías responder de antemano?",
+      "labelUsted": "¿Qué pregunta le hace la gente por *WhatsApp* o correo una y otra vez que le quita tiempo y podría responder de antemano?"
+    },
+    {
+      "code": "3.5",
+      "phaseCode": "3",
+      "labelTu": "Cuando tu cliente busque tu web, ¿dónde crees que estará? ¿En la calle con el *celular* o tranquilo en su *escritorio*?",
+      "labelUsted": "Cuando su cliente busque su web, ¿dónde cree que estará? ¿En la calle con el *celular* o tranquilo en su *escritorio*?"
+    },
+    {
+      "code": "4.1",
+      "phaseCode": "4",
+      "labelTu": "Muéstranos dos páginas web de tu sector (o fuera de él) que *detestes* y dime exactamente qué es lo que te molesta de ellas.",
+      "labelUsted": "Muéstrenos dos páginas web de su sector (o fuera de él) que *deteste* y díganos exactamente qué es lo que le molesta de ellas."
+    },
+    {
+      "code": "4.2",
+      "phaseCode": "4",
+      "labelTu": "Si tu marca pudiera vestirse con ropa de una tienda famosa, ¿cuál sería el *estilo* que mejor representaría tu calidad?",
+      "labelUsted": "Si su marca pudiera vestirse con ropa de una tienda famosa, ¿cuál sería el *estilo* que mejor representaría su calidad?"
+    },
+    {
+      "code": "4.3",
+      "phaseCode": "4",
+      "labelTu": "Si tu marca fuera una *persona* que entra a una sala de juntas, ¿cómo *saludaría*?",
+      "labelUsted": "Si su marca fuera una *persona* que entra a una sala de juntas, ¿cómo *saludaría*?"
+    },
+    {
+      "code": "5.1",
+      "phaseCode": "5",
+      "labelTu": "Además de ti, ¿hay algún socio, pareja o asesor técnico que deba revisar y aprobar los *diseños finales*?",
+      "labelUsted": "Además de usted, ¿hay algún socio, pareja o asesor técnico que deba revisar y aprobar los *diseños finales*?"
+    },
+    {
+      "code": "5.2",
+      "phaseCode": "5",
+      "labelTu": "¿El *contenido actual* (textos, fotos, testimonios) está listo para usarse, o hay que auditarlo y reescribirlo desde cero?",
+      "labelUsted": "¿El *contenido actual* (textos, fotos, testimonios) está listo para usarse, o hay que auditarlo y reescribirlo desde cero?"
+    },
+    {
+      "code": "5.3",
+      "phaseCode": "5",
+      "labelTu": "¿Tienes algún evento, lanzamiento o *fecha comercial* importante donde la web tenga que estar operando de forma obligatoria?",
+      "labelUsted": "¿Tiene algún evento, lanzamiento o *fecha comercial* importante donde la web tenga que estar operando de forma obligatoria?"
+    }
+  ],
+  "copy": {
+    "assistantIntro": "¡Hola, {{contactName}}!\nSoy tu asistente *Lisa*. Te acompañaré en esta plática para saber más sobre *{{businessName}}*.",
+    "assistantIntroCta": "Empecemos",
+    "privacyTitle": "Antes de empezar",
+    "privacyBody": "Tus respuestas están *seguras*. Solo las usamos para preparar *tu proyecto*.",
+    "privacyLinkLabel": "Aviso de privacidad",
+    "privacyLinkUrl": "https://idwasoft.com/aviso-privacidad",
+    "privacyDuration": "10 a 15 min",
+    "privacyDurationNote": "puedes salir y continuar en cualquier momento",
+    "toneLead": "Algunas personas prefieren una *plática* formal; otras prefieren algo más *casual*. Cuéntanos, ¿cuál es tu *estilo*?",
+    "toneOptionTu": "CASUAL",
+    "toneOptionUsted": "FORMAL",
+    "tonePreviewTu": "Plática de amigos",
+    "tonePreviewUsted": "Más protocolaria",
+    "phaseTransitions": {
+      "1": "Gracias — esto nos ayuda mucho para entender el *corazón* de tu negocio.",
+      "2": "Perfecto. Ahora hablemos de lo que buscas con la *página web*.",
+      "3": "Muy bien. Queremos conocer mejor a las personas que te van a visitar *en línea*.",
+      "4": "Excelente. Siguiente: cómo te gustaría que se viera y se sintiera tu *marca*.",
+      "5": "Casi terminamos. Unas preguntas rápidas de *logística*."
+    },
+    "farewellTu": "¡Listo, {{contactName}}! Gracias por platicar con nosotros sobre *{{businessName}}*. Pronto te escribiremos para agendar la *llamada de seguimiento*.",
+    "farewellUsted": "¡Listo, {{contactName}}! Gracias por platicar con nosotros sobre *{{businessName}}*. Pronto nos pondremos en contacto para agendar la *llamada de seguimiento*.",
+    "revokedTitle": "Este enlace ya no está disponible",
+    "revokedBody": "Si cree que se trata de un *error*, escríbanos y con gusto le ayudamos.",
+    "skipLabel": "Prefiero no contestar",
+    "continueLabel": "Continuar",
+    "microRepliesTu": [
+      "Va, buen punto.",
+      "Eso ayuda mucho.",
+      "Interesante, gracias.",
+      "Queda claro.",
+      "Perfecto, seguimos."
+    ],
+    "microRepliesUsted": [
+      "Muy bien, gracias.",
+      "Le agradecemos, es claro.",
+      "Interesante, gracias.",
+      "Queda claro.",
+      "Perfecto, continuamos."
+    ],
+    "microRepliesTemplateTu": [
+      "Gracias, lo anotamos.",
+      "Entendido, seguimos.",
+      "Perfecto, continuamos."
+    ],
+    "microRepliesTemplateUsted": [
+      "Gracias, lo anotamos.",
+      "Entendido, continuamos.",
+      "Perfecto, seguimos."
+    ]
+  }
+}

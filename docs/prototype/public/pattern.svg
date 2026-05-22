@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+  <defs>
+    <pattern id="dots" width="60" height="60" patternUnits="userSpaceOnUse">
+      <circle cx="8" cy="8" r="5" fill="#00B4FF" opacity="0.45"/>
+      <circle cx="38" cy="38" r="5" fill="#00B4FF" opacity="0.45"/>
+      <ellipse cx="23" cy="23" rx="14" ry="6" fill="#00B4FF" opacity="0.35" transform="rotate(-35 23 23)"/>
+    </pattern>
+  </defs>
+  <rect width="120" height="120" fill="url(#dots)"/>
+</svg>
