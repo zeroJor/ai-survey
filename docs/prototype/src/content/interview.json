@@ -170,8 +170,8 @@
       "4": "Excelente. Siguiente: cómo te gustaría que se viera y se sintiera tu *marca*.",
       "5": "Casi terminamos. Unas preguntas rápidas de *logística*."
     },
-    "farewellTu": "¡Listo, {{contactName}}! Gracias por platicar con nosotros sobre *{{businessName}}*. Pronto te escribiremos para agendar la *llamada de seguimiento*.",
-    "farewellUsted": "¡Listo, {{contactName}}! Gracias por platicar con nosotros sobre *{{businessName}}*. Pronto nos pondremos en contacto para agendar la *llamada de seguimiento*.",
+    "farewellTu": "¡Listo, {{contactName}}!\n\nGracias por platicar con nosotros sobre *{{businessName}}*. Pronto te escribiremos para agendar la *llamada de seguimiento*.",
+    "farewellUsted": "¡Listo, {{contactName}}!\n\nGracias por platicar con nosotros sobre *{{businessName}}*. Pronto nos pondremos en contacto para agendar la *llamada de seguimiento*.",
     "revokedTitle": "Este enlace ya no está disponible",
     "revokedBody": "Si cree que se trata de un *error*, escríbanos y con gusto le ayudamos.",
     "skipLabel": "Prefiero no contestar",

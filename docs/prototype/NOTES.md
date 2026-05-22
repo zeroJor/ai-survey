@@ -9,7 +9,7 @@ Checklist of UX states and how to trigger them in this prototype.
 - [x] **Tone onboarding** — two option cards; Continue without selection → **usted**
 - [x] **Phase 0** — intro copy only, Continue
 - [x] **Question loop** — all 19 questions from `interview.json`; register drives tu/usted labels
-- [x] **Prefiero no contestar** — enables Continue with empty body
+- [x] **Prefiero no contestar** — barra inferior con ese texto si el campo está vacío; con texto → «Continuar»
 - [x] **Micro-reply** — skeleton then one-line ack; `loading_answer` extends delay
 - [x] **Lisa portraits** — catálogo en [assistant-expression.md](../requierements/assistant-expression.md) §2; assets en `assistantGestures.ts`. Micro-replies: **retrato aleatorio** (prototipo) para revisar todas las expresiones.
 - [ ] **Sentiment + register (tú/usted)** — spec in [assistant-expression.md](../requierements/assistant-expression.md); not split by register yet
@@ -39,8 +39,15 @@ Dev panel: fixed bottom **Prototype scenarios** `<select>` reloads the page with
 - Admin `/admin`, email UI, dark mode
 - Editing answers after submit
 
+## Mobile
+
+- **Continuar:** barra inferior negra a ancho completo con texto + chevron blanco; en `lg+` chevron lateral.
+- Contenido con scroll en `shell-main`; padding inferior en pasos con CTA.
+- **Lisa:** arriba y centrada (welcome, micro-reply, farewell); retrato más grande y anillo más fino (`--aura-ring-width-scale` ~0.56).
+- **Títulos de fase:** centrados a mitad de viewport en transiciones entre secciones.
+
 ## Review tips
 
-1. Resize to ~375px width for mobile check.
+1. Resize to ~375px width for mobile check (action bar + scroll).
 2. Walk happy path once; use `in_progress` to spot-check mid-flow resume.
 3. Compare logo + pattern against Idwasoft brand references in PR.

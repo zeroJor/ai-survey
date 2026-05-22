@@ -12,7 +12,7 @@ interface Props {
   message: string | null;
 }
 
-/** Brief ack on the left — letter-drop + wait line */
+/** Brief ack — same Lisa stack as welcome (avatar arriba, copy abajo en móvil). */
 export function MicroReplyBubble({
   gesture,
   loading,
@@ -21,32 +21,32 @@ export function MicroReplyBubble({
   const holdMs = message ? confirmationHoldMs(message) : 0;
 
   return (
-    <div
-      className="micro-reply-stage micro-reply-layout"
-      aria-live="polite"
-      aria-busy={loading}
-    >
-      {gesture && (
-        <div className="micro-reply-identity">
-          <AssistantAiAura className="micro-reply-avatar">
+    <div className="micro-reply-stage">
+      <div
+        className="welcome-intro-speech micro-reply-speech"
+        aria-live="polite"
+        aria-busy={loading}
+      >
+        {gesture && (
+          <AssistantAiAura className="welcome-intro-avatar micro-reply-avatar">
             <AssistantAvatar gesture={gesture} size="lg" />
           </AssistantAiAura>
-        </div>
-      )}
-      <div className="micro-reply-body">
-        {loading ? (
-          <ReplyLoadingDots />
-        ) : (
-          message && (
-            <>
-              <AnimatedReplyText key={message} text={message} />
-              <ReplyWaitProgress
-                durationMs={holdMs}
-                phaseKey={`hold-${message}`}
-              />
-            </>
-          )
         )}
+        <div className="micro-reply-body">
+          {loading ? (
+            <ReplyLoadingDots />
+          ) : (
+            message && (
+              <>
+                <AnimatedReplyText key={message} text={message} />
+                <ReplyWaitProgress
+                  durationMs={holdMs}
+                  phaseKey={`hold-${message}`}
+                />
+              </>
+            )
+          )}
+        </div>
       </div>
     </div>
   );

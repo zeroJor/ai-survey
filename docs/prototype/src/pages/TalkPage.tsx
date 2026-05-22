@@ -4,7 +4,6 @@ import type { BootstrapPhase } from "../components/BootstrapAuraDock";
 import { useAppBootstrap } from "../hooks/useAppBootstrap";
 import { useAdvanceHotkey } from "../hooks/useAdvanceHotkey";
 import { useLocation } from "react-router-dom";
-import { BackEdgeControl } from "../components/BackEdgeControl";
 import { DevScenarioSwitcher } from "../components/DevScenarioSwitcher";
 import { InterviewShell } from "../components/InterviewShell";
 import { MicroReplyBubble } from "../components/MicroReplyBubble";
@@ -58,7 +57,6 @@ export function TalkPage() {
     progressPercent,
     draftBody,
     setDraftBody,
-    draftSkipped,
     setDraftSkipped,
     microReply,
     microReplyGesture,
@@ -69,8 +67,6 @@ export function TalkPage() {
     selectTone,
     confirmTone,
     submitAnswer,
-    goBack,
-    canGoBack,
     isSubmitting,
     farewellText,
   } = flow;
@@ -135,9 +131,7 @@ export function TalkPage() {
     (flowStep === "assistantIntro" ||
       flowStep === "privacy" ||
       (flowStep === "tone" && toneSelected != null) ||
-      (flowStep === "question" &&
-        !!currentQuestion &&
-        (draftSkipped || draftBody.trim().length > 0)));
+      (flowStep === "question" && !!currentQuestion));
 
   const handleAdvance = useCallback(() => {
     if (flowStep === "assistantIntro") confirmAssistantIntro();
@@ -164,7 +158,6 @@ export function TalkPage() {
 
   const interview = (
     <>
-      <BackEdgeControl visible={canGoBack} onBack={goBack} />
       <InterviewShell
         progressPercent={interviewProgressPercent}
         showProgressLine={flowStep !== "revoked"}
@@ -205,19 +198,14 @@ export function TalkPage() {
               label={questionLabel}
               hint={questionHint}
               body={draftBody}
-              skipped={draftSkipped}
               skipLabel={content.copy.skipLabel}
               continueLabel={content.copy.continueLabel}
-              onBodyChange={setDraftBody}
-              onSkip={() => {
-                setDraftSkipped(true);
-                setDraftBody("");
+              onBodyChange={(value) => {
+                setDraftBody(value);
+                if (value.trim()) setDraftSkipped(false);
               }}
               onContinue={() => void submitAnswer()}
-              continueDisabled={
-                isSubmitting ||
-                (!draftSkipped && draftBody.trim().length === 0)
-              }
+              continueDisabled={isSubmitting}
             />
           )}
 

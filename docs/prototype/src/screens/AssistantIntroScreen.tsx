@@ -3,6 +3,7 @@ import {
   BootstrapAuraDock,
   type BootstrapPhase,
 } from "../components/BootstrapAuraDock";
+import { AdvanceButton } from "../components/AdvanceButton";
 import { AssistantAvatar } from "../components/AssistantAvatar";
 import { RichText } from "../components/RichText";
 import { gestureById } from "../lib/assistantGestures";
@@ -51,7 +52,11 @@ export function AssistantIntroScreen({
             className="welcome-intro-title !normal-case"
             text={message}
           />
-          <button type="button" className="welcome-intro-cta" onClick={onStart}>
+          <button
+            type="button"
+            className="welcome-intro-cta welcome-intro-cta--inline"
+            onClick={onStart}
+          >
             {ctaLabel}
           </button>
         </motion.div>
@@ -65,7 +70,11 @@ export function AssistantIntroScreen({
             className="welcome-intro-title !normal-case"
             text={message}
           />
-          <button type="button" tabIndex={-1} className="welcome-intro-cta">
+          <button
+            type="button"
+            tabIndex={-1}
+            className="welcome-intro-cta welcome-intro-cta--inline"
+          >
             {ctaLabel}
           </button>
         </div>
@@ -73,5 +82,16 @@ export function AssistantIntroScreen({
     </div>
   );
 
-  return <div className="welcome-intro-stage">{speech}</div>;
+  return (
+    <div className={["welcome-intro-stage", ringAtRest ? "welcome-intro-stage--advance" : ""].join(" ")}>
+      {speech}
+      {ringAtRest && (
+        <AdvanceButton
+          onClick={onStart}
+          label={ctaLabel}
+          showEdgeChevron={false}
+        />
+      )}
+    </div>
+  );
 }

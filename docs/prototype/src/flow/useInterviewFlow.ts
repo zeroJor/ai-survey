@@ -181,10 +181,12 @@ export function useInterviewFlow(scenario: Scenario) {
 
     setIsSubmitting(true);
 
+    const trimmed = draftBody.trim();
+    const skipped = draftSkipped || trimmed.length === 0;
     const record: AnswerRecord = {
       questionCode: currentQuestion.code,
-      body: draftSkipped ? "" : draftBody.trim(),
-      skipped: draftSkipped,
+      body: skipped ? "" : trimmed,
+      skipped,
     };
 
     setAnswers((prev) => {
@@ -237,66 +239,6 @@ export function useInterviewFlow(scenario: Scenario) {
     return fillTemplate(template, defaultInvite);
   }, [register]);
 
-  const goBack = useCallback(() => {
-    if (isSubmitting) return;
-
-    if (flowStep === "phaseTransition") {
-      setPendingPhaseCode(null);
-      if (answers.length === 0 && questionIndex === 0) {
-        setFlowStep("tone");
-        return;
-      }
-      setFlowStep("question");
-      restoreDraftForQuestion(questionIndex);
-      return;
-    }
-
-    if (flowStep === "microReply") {
-      setMicroReply(null);
-      setMicroReplyGesture(null);
-      setMicroReplyLoading(false);
-      setFlowStep("question");
-      restoreDraftForQuestion(questionIndex);
-      return;
-    }
-
-    if (flowStep === "question") {
-      if (questionIndex > 0) {
-        const prevIndex = questionIndex - 1;
-        setQuestionIndex(prevIndex);
-        restoreDraftForQuestion(prevIndex);
-        setFlowStep("question");
-        return;
-      }
-      setFlowStep("tone");
-      setToneSelected(register);
-      return;
-    }
-
-    if (flowStep === "tone") {
-      setFlowStep("privacy");
-      return;
-    }
-
-    if (flowStep === "privacy") {
-      setFlowStep("assistantIntro");
-    }
-  }, [
-    flowStep,
-    isSubmitting,
-    questionIndex,
-    register,
-    answers.length,
-    restoreDraftForQuestion,
-  ]);
-
-  const canGoBack =
-    !isSubmitting &&
-    flowStep !== "assistantIntro" &&
-    flowStep !== "privacy" &&
-    flowStep !== "revoked" &&
-    flowStep !== "farewell";
-
   return {
     content,
     invite: defaultInvite,
@@ -322,8 +264,6 @@ export function useInterviewFlow(scenario: Scenario) {
     selectTone,
     confirmTone,
     submitAnswer,
-    goBack,
-    canGoBack,
     isSubmitting,
     farewellText,
     totalQuestions: questionList.length,
