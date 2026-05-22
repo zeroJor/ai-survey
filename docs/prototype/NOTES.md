@@ -4,7 +4,7 @@ Checklist of UX states and how to trigger them in this prototype.
 
 ## Covered flows
 
-- [x] **Bootstrap loader** — pantalla inicial ~3s (`APP_BOOTSTRAP_MS`): precarga retratos Lisa + mock `GET /api/talk`, anillo AI centrado; fade out al terminar
+- [x] **Bootstrap loader** — ~3s: anillo **pequeño** centrado; mismo canvas (`BootstrapAuraDock`) ease-out al slot de Lisa; durante el vuelo: fade-in de Lisa + texto + CTA
 - [x] **Privacy** — `/talk` (default scenario): title, body, aviso link, ~15–20 min note
 - [x] **Tone onboarding** — two option cards; Continue without selection → **usted**
 - [x] **Phase 0** — intro copy only, Continue

@@ -1,6 +1,6 @@
-import { LayoutGroup, motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { InitialLoader } from "../components/InitialLoader";
+import type { BootstrapPhase } from "../components/BootstrapAuraDock";
 import { useAppBootstrap } from "../hooks/useAppBootstrap";
 import { useAdvanceHotkey } from "../hooks/useAdvanceHotkey";
 import { useLocation } from "react-router-dom";
@@ -20,24 +20,33 @@ import { PhaseIntroScreen } from "../screens/PhaseIntroScreen";
 import { ToneScreen } from "../screens/ToneScreen";
 import { phaseIntroHoldMs } from "../lib/timing";
 import { fillTemplate } from "../data/mockInvite";
-import type { Register } from "../types";
+import { EASE_OUT } from "../lib/motion";
+import type { Register, Scenario } from "../types";
 
-const APP_REVEAL_EASE = [0.22, 1, 0.36, 1] as const;
+/** Scenarios that open on welcome and use the shared bootstrap aura. */
+function usesBootstrapDock(scenario: Scenario): boolean {
+  return (
+    scenario === "default" ||
+    scenario === "long_answer" ||
+    scenario === "skip_answer"
+  );
+}
 
 export function TalkPage() {
   const reduceMotion = useReducedMotion();
   const bootstrapReady = useAppBootstrap();
-  const [handoff, setHandoff] = useState(false);
-  const [loaderDone, setLoaderDone] = useState(false);
-
-  useEffect(() => {
-    if (bootstrapReady) setHandoff(true);
-  }, [bootstrapReady]);
   const location = useLocation();
   const scenario = useMemo(
     () => parseScenario(location.search),
     [location.search],
   );
+  const bootstrapDock = usesBootstrapDock(scenario);
+
+  const [bootstrapPhase, setBootstrapPhase] =
+    useState<BootstrapPhase>("loading");
+
+  const handleDocked = useCallback(() => setBootstrapPhase("ready"), []);
+
   const flow = useInterviewFlow(scenario);
   const {
     content,
@@ -65,6 +74,15 @@ export function TalkPage() {
     isSubmitting,
     farewellText,
   } = flow;
+
+  useEffect(() => {
+    if (!bootstrapReady) return;
+    if (!bootstrapDock || flowStep !== "assistantIntro") {
+      setBootstrapPhase("ready");
+      return;
+    }
+    if (bootstrapPhase === "loading") setBootstrapPhase("docking");
+  }, [bootstrapReady, bootstrapDock, bootstrapPhase, flowStep]);
 
   const interviewProgressPercent = useMemo(() => {
     switch (flowStep) {
@@ -137,7 +155,12 @@ export function TalkPage() {
         ? `q-${currentQuestion.code}`
         : flowStep;
 
-  const auraHandoff = handoff && flowStep === "assistantIntro";
+  const showBackdrop =
+    bootstrapDock &&
+    (bootstrapPhase === "loading" || bootstrapPhase === "docking");
+
+  const introContentVisible =
+    !bootstrapDock || bootstrapPhase === "ready";
 
   const interview = (
     <>
@@ -152,7 +175,8 @@ export function TalkPage() {
               message={assistantIntroMessage}
               ctaLabel={content.copy.assistantIntroCta}
               onStart={confirmAssistantIntro}
-              bootstrapHandoff={auraHandoff && !loaderDone}
+              bootstrapPhase={bootstrapDock ? bootstrapPhase : "ready"}
+              onDocked={handleDocked}
             />
           )}
 
@@ -215,37 +239,34 @@ export function TalkPage() {
     </>
   );
 
-  if (!handoff) {
-    return (
-      <InitialLoader
-        exiting={false}
-        auraHandoff={false}
-        onExited={() => setLoaderDone(true)}
-      />
-    );
+  if (bootstrapDock && flowStep !== "assistantIntro") {
+    return interview;
   }
 
   return (
-    <LayoutGroup id="bootstrap-handoff">
-      <motion.div
-        className="app-reveal"
-        initial={reduceMotion ? false : { opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{
-          duration: reduceMotion ? 0.2 : 0.88,
-          delay: reduceMotion ? 0 : 0.1,
-          ease: APP_REVEAL_EASE,
-        }}
-      >
-        {interview}
-      </motion.div>
-      {!loaderDone && (
-        <InitialLoader
-          exiting
-          auraHandoff={auraHandoff}
-          onExited={() => setLoaderDone(true)}
+    <>
+      {showBackdrop && (
+        <motion.div
+          className="bootstrap-backdrop"
+          aria-hidden
+          initial={false}
+          animate={{ opacity: bootstrapPhase === "loading" ? 1 : 0 }}
+          transition={{
+            duration: reduceMotion ? 0.15 : 0.85,
+            ease: EASE_OUT,
+          }}
         />
       )}
-    </LayoutGroup>
+      <div
+        className={[
+          "app-reveal",
+          !introContentVisible ? "app-reveal--bootstrap-active" : "",
+        ]
+          .filter(Boolean)
+          .join(" ")}
+      >
+        {interview}
+      </div>
+    </>
   );
 }

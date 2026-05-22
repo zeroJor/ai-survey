@@ -1,5 +1,8 @@
 import type { Variants } from "framer-motion";
 
+/** CSS ease-out — rápido al salir, suave al llegar (aterrizaje del anillo, etc.). */
+export const EASE_OUT: [number, number, number, number] = [0, 0, 0.2, 1];
+
 /** Simple, elegant — opacity only */
 export const pageVariants: Variants = {
   initial: { opacity: 0 },

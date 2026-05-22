@@ -458,11 +458,20 @@
     align-items: start;
   }
 
-  .welcome-intro-avatar {
+  .welcome-intro-avatar-mount {
     grid-column: 1;
     grid-row: 1 / -1;
     align-self: start;
     margin: 0 0.65rem 0 0;
+  }
+
+  .welcome-intro-avatar-mount > .welcome-intro-avatar {
+    margin: 0;
+  }
+
+  .bootstrap-aura-anchor {
+    position: relative;
+    z-index: 50;
   }
 
   .welcome-intro-avatar.assistant-ai-aura {
@@ -527,59 +536,73 @@
     margin: 0;
   }
 
-  /* —— Initial bootstrap loader —— */
-  .initial-loader {
+  /* —— Bootstrap: one canvas, docked via transform into welcome slot —— */
+  .bootstrap-backdrop {
     position: fixed;
     inset: 0;
-    z-index: 60;
+    z-index: 40;
+    background: var(--page);
     pointer-events: none;
   }
 
-  .initial-loader-backdrop {
-    position: absolute;
-    inset: 0;
-    background: var(--page);
+  .bootstrap-aura-dock__motion {
+    transform-origin: center center;
+    will-change: transform;
   }
 
-  .initial-loader-aura-host {
-    position: fixed;
+  /* Retrato debajo del canvas — el anillo siempre encima de Lisa */
+  .bootstrap-aura-dock__motion .assistant-ai-aura-canvas {
+    z-index: 2;
+  }
+
+  .bootstrap-aura-dock__motion .assistant-ai-aura-portrait {
     z-index: 1;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
   }
 
-  .initial-loader-aura-host--center {
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  .initial-loader-aura.assistant-ai-aura {
-    --aura-portrait: 2.75rem;
-    --aura-halo-scale: 3.25;
+  .bootstrap-aura-dock__aura--loading {
     --aura-ring-width-scale: 1.55;
   }
 
-  .initial-loader-core {
-    display: block;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background: var(--page);
+  /* Carga: anillo visible; hueco del retrato transparente (sin disco blanco) */
+  .bootstrap-aura-dock__aura--loading .assistant-ai-aura-portrait {
+    background: transparent;
+    box-shadow: none;
   }
 
-  .welcome-intro-avatar-wrap {
-    grid-column: 1;
-    grid-row: 1 / -1;
-    align-self: start;
-    margin: 0 0.65rem 0 0;
+  .bootstrap-aura-dock__portrait--hidden {
+    visibility: hidden;
+    pointer-events: none;
   }
 
-  .welcome-intro-portrait-reveal,
+  .bootstrap-aura-dock__portrait--hidden .assistant-avatar {
+    visibility: hidden;
+  }
+
+  .bootstrap-aura-dock__portrait,
+  .bootstrap-aura-dock__portrait .assistant-avatar {
+    @apply h-full w-full ring-0;
+    max-width: none;
+    max-height: none;
+    object-fit: cover;
+    object-position: center 22%;
+  }
+
+  .app-reveal--bootstrap-active .welcome-intro-copy-reveal--hidden {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .app-reveal--bootstrap-active .welcome-intro-speech {
+    pointer-events: none;
+  }
+
   .welcome-intro-copy-reveal {
     display: contents;
+  }
+
+  .welcome-intro-copy-reveal--hidden {
+    visibility: hidden;
+    pointer-events: none;
   }
 
   .welcome-intro-copy-reveal > .welcome-intro-title {
@@ -620,6 +643,7 @@
   }
 
   .assistant-ai-aura-portrait {
+    --aura-face-inset: max(3px, 3.5%);
     position: absolute;
     left: 50%;
     top: 50%;
@@ -628,9 +652,28 @@
     height: var(--aura-portrait);
     transform: translate(-50%, -50%);
     @apply flex items-stretch justify-stretch overflow-hidden rounded-full bg-white;
+    /* Máscara: Lisa solo dentro del hueco; nunca sobre la banda del anillo */
+    clip-path: circle(calc(50% - var(--aura-face-inset)) at 50% 50%);
+    -webkit-clip-path: circle(calc(50% - var(--aura-face-inset)) at 50% 50%);
+    mask-image: radial-gradient(
+      circle at 50% 50%,
+      #000 calc(100% - var(--aura-face-inset)),
+      transparent calc(100% - var(--aura-face-inset))
+    );
+    -webkit-mask-image: radial-gradient(
+      circle at 50% 50%,
+      #000 calc(100% - var(--aura-face-inset)),
+      transparent calc(100% - var(--aura-face-inset))
+    );
+    mask-mode: alpha;
+    -webkit-mask-mode: alpha;
+    box-shadow: none;
+  }
+
+  .welcome-intro-avatar.assistant-ai-aura-portrait {
     box-shadow:
-      0 0 0 2px #fff,
-      0 0 0 3px rgb(0 119 255 / 0.35);
+      inset 0 0 0 2px #fff,
+      inset 0 0 0 3px rgb(0 119 255 / 0.2);
   }
 
   .reply-wait {
