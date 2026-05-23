@@ -882,15 +882,6 @@
     will-change: transform;
   }
 
-  /* Retrato debajo del canvas — el anillo siempre encima de Lisa */
-  .bootstrap-aura-dock__motion .assistant-ai-aura-canvas {
-    z-index: 2;
-  }
-
-  .bootstrap-aura-dock__motion .assistant-ai-aura-portrait {
-    z-index: 1;
-  }
-
   .bootstrap-aura-dock__aura--loading {
     --aura-ring-width-scale: 1.55;
   }
@@ -899,21 +890,6 @@
     .bootstrap-aura-dock__aura--loading {
       --aura-ring-width-scale: 0.56;
     }
-  }
-
-  /* Carga: anillo visible; hueco del retrato transparente (sin disco blanco) */
-  .bootstrap-aura-dock__aura--loading .assistant-ai-aura-portrait {
-    background: transparent;
-    box-shadow: none;
-  }
-
-  .bootstrap-aura-dock__portrait--hidden {
-    visibility: hidden;
-    pointer-events: none;
-  }
-
-  .bootstrap-aura-dock__portrait--hidden .assistant-avatar {
-    visibility: hidden;
   }
 
   .bootstrap-aura-dock__portrait,
@@ -971,7 +947,7 @@
     min-height: 100dvh;
   }
 
-  /* —— AI aura (canvas ring + fused buds) —— */
+  /* —— AI aura (canvas: Lisa + ring + buds) —— */
   .assistant-ai-aura {
     /* Welcome intro portrait diameter — canvas draw scale 1 when matched */
     --aura-ref-portrait: calc(
@@ -987,45 +963,10 @@
     justify-content: center;
     width: calc(var(--aura-portrait) * var(--aura-halo-scale));
     height: calc(var(--aura-portrait) * var(--aura-halo-scale));
-    isolation: isolate;
   }
 
   .assistant-ai-aura-canvas {
-    @apply pointer-events-none absolute inset-0 h-full w-full;
-  }
-
-  .assistant-ai-aura-portrait {
-    --aura-face-inset: max(3px, 3.5%);
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    z-index: 1;
-    width: var(--aura-portrait);
-    height: var(--aura-portrait);
-    transform: translate(-50%, -50%);
-    @apply flex items-stretch justify-stretch overflow-hidden rounded-full bg-white;
-    /* Máscara: Lisa solo dentro del hueco; nunca sobre la banda del anillo */
-    clip-path: circle(calc(50% - var(--aura-face-inset)) at 50% 50%);
-    -webkit-clip-path: circle(calc(50% - var(--aura-face-inset)) at 50% 50%);
-    mask-image: radial-gradient(
-      circle at 50% 50%,
-      #000 calc(100% - var(--aura-face-inset)),
-      transparent calc(100% - var(--aura-face-inset))
-    );
-    -webkit-mask-image: radial-gradient(
-      circle at 50% 50%,
-      #000 calc(100% - var(--aura-face-inset)),
-      transparent calc(100% - var(--aura-face-inset))
-    );
-    mask-mode: alpha;
-    -webkit-mask-mode: alpha;
-    box-shadow: none;
-  }
-
-  .welcome-intro-avatar.assistant-ai-aura-portrait {
-    box-shadow:
-      inset 0 0 0 2px #fff,
-      inset 0 0 0 3px rgb(0 119 255 / 0.2);
+    @apply pointer-events-none block h-full w-full;
   }
 
   .reply-wait {

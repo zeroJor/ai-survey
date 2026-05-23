@@ -4,7 +4,6 @@ import {
   type BootstrapPhase,
 } from "../components/BootstrapAuraDock";
 import { AdvanceButton } from "../components/AdvanceButton";
-import { AssistantAvatar } from "../components/AssistantAvatar";
 import { RichText } from "../components/RichText";
 import { gestureById } from "../lib/assistantGestures";
 import { EASE_OUT } from "../lib/motion";
@@ -34,9 +33,14 @@ export function AssistantIntroScreen({
 
   const speech = (
     <div className="welcome-intro-speech">
-      <BootstrapAuraDock phase={bootstrapPhase} onDocked={onDocked}>
-        <AssistantAvatar gesture={WELCOME_GESTURE} size="lg" />
-      </BootstrapAuraDock>
+      <BootstrapAuraDock
+        phase={bootstrapPhase}
+        onDocked={onDocked}
+        portrait={{
+          src: WELCOME_GESTURE.src,
+          alt: WELCOME_GESTURE.label,
+        }}
+      />
       {ringAtRest ? (
         <motion.div
           className="welcome-intro-copy-reveal"

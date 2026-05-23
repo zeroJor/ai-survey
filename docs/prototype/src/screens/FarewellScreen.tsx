@@ -1,6 +1,5 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { AssistantAiAura } from "../components/AssistantAiAura";
-import { AssistantAvatar } from "../components/AssistantAvatar";
 import { RichText } from "../components/RichText";
 import { FAREWELL_GESTURE } from "../lib/assistantGestures";
 
@@ -13,9 +12,13 @@ export function FarewellScreen({ message }: Props) {
 
   const speech = (
     <div className="welcome-intro-speech farewell-speech">
-      <AssistantAiAura className="welcome-intro-avatar">
-        <AssistantAvatar gesture={FAREWELL_GESTURE} size="lg" />
-      </AssistantAiAura>
+      <AssistantAiAura
+        className="welcome-intro-avatar"
+        portrait={{
+          src: FAREWELL_GESTURE.src,
+          alt: FAREWELL_GESTURE.label,
+        }}
+      />
       <div className="farewell-copy">
         <RichText
           as="p"

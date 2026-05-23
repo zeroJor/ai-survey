@@ -146,6 +146,82 @@ function traceFluidRing(
   ctx.closePath();
 }
 
+export interface PortraitPaintOptions {
+  image: CanvasImageSource;
+  opacity: number;
+  /** Match `object-[center_22%]` on the former `<img>`. */
+  objectPositionY?: number;
+  /** Welcome slot: subtle inset rings like the old box-shadow. */
+  showWelcomeInset?: boolean;
+}
+
+function faceClipRadius(portraitR: number): number {
+  const diameter = portraitR * 2;
+  const inset = Math.max(3, diameter * 0.035);
+  return Math.max(portraitR - inset, 0);
+}
+
+/** Lisa portrait inside the ring hole (drawn before the annulus). */
+export function paintPortrait(
+  ctx: CanvasRenderingContext2D,
+  cx: number,
+  cy: number,
+  portraitR: number,
+  options: PortraitPaintOptions,
+) {
+  const { image, opacity, objectPositionY = 0.22, showWelcomeInset = false } =
+    options;
+  if (opacity <= 0 || portraitR <= 0) return;
+
+  const faceR = faceClipRadius(portraitR);
+  if (faceR <= 0) return;
+
+  const iw =
+    "naturalWidth" in image && image.naturalWidth > 0
+      ? image.naturalWidth
+      : "width" in image
+        ? (image as { width: number }).width
+        : 0;
+  const ih =
+    "naturalHeight" in image && image.naturalHeight > 0
+      ? image.naturalHeight
+      : "height" in image
+        ? (image as { height: number }).height
+        : 0;
+  if (iw <= 0 || ih <= 0) return;
+
+  const side = faceR * 2;
+  const scale = Math.max(side / iw, side / ih);
+  const dw = iw * scale;
+  const dh = ih * scale;
+  const dx = cx - dw / 2;
+  const dy = cy - dh / 2 + objectPositionY * (side - dh);
+
+  ctx.save();
+  ctx.globalAlpha = opacity;
+  ctx.beginPath();
+  ctx.arc(cx, cy, faceR, 0, Math.PI * 2);
+  ctx.clip();
+  ctx.fillStyle = "#fff";
+  ctx.fill();
+  ctx.drawImage(image, dx, dy, dw, dh);
+
+  if (showWelcomeInset) {
+    ctx.beginPath();
+    ctx.arc(cx, cy, faceR, 0, Math.PI * 2);
+    ctx.strokeStyle = "#fff";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(cx, cy, faceR, 0, Math.PI * 2);
+    ctx.strokeStyle = "rgba(0, 119, 255, 0.2)";
+    ctx.lineWidth = 3;
+    ctx.stroke();
+  }
+
+  ctx.restore();
+}
+
 export function paintAssistantAura(
   ctx: CanvasRenderingContext2D,
   width: number,
@@ -157,6 +233,7 @@ export function paintAssistantAura(
   animate = true,
   drawScale = 1,
   ringWidthScale = 1,
+  portrait?: PortraitPaintOptions,
 ) {
   const dpr = width > 0 ? ctx.canvas.width / width : 1;
   const cx = width / 2;
@@ -171,6 +248,10 @@ export function paintAssistantAura(
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   ctx.clearRect(0, 0, width, height);
   ctx.shadowBlur = 0;
+
+  if (portrait) {
+    paintPortrait(ctx, cx, cy, portraitR, portrait);
+  }
 
   ctx.save();
   ctx.translate(cx, cy);

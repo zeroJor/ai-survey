@@ -1,22 +1,26 @@
 /** Design-time welcome portrait radius at max type (2.35 × 3.75rem ÷ 2 @ 16px root). */
 export const AURA_REF_PORTRAIT_RADIUS_PX = 70.5;
 
-/** Measures `--aura-ref-portrait` the same way the portrait slot resolves em/calc. */
-export function refPortraitDiameterPx(host: HTMLElement): number {
-  const ref = getComputedStyle(host).getPropertyValue("--aura-ref-portrait").trim();
-  if (!ref) return 0;
+/** Resolves `--aura-portrait` on the aura host to pixels. */
+export function portraitDiameterPx(host: HTMLElement): number {
+  const size = getComputedStyle(host).getPropertyValue("--aura-portrait").trim();
+  if (!size) return 0;
 
   const probe = document.createElement("div");
-  probe.className = "assistant-ai-aura-portrait";
   probe.style.position = "absolute";
   probe.style.visibility = "hidden";
   probe.style.pointerEvents = "none";
-  probe.style.width = ref;
-  probe.style.height = ref;
+  probe.style.width = size;
+  probe.style.height = size;
   host.appendChild(probe);
   const px = probe.getBoundingClientRect().width;
   host.removeChild(probe);
   return px;
+}
+
+/** @deprecated Use {@link portraitDiameterPx}. */
+export function refPortraitDiameterPx(host: HTMLElement): number {
+  return portraitDiameterPx(host);
 }
 
 /**
@@ -33,12 +37,14 @@ export function auraDrawScale(
     return 1;
   }
 
-  let refRadiusPx = refPortraitDiameterPx(host) / 2;
+  let refRadiusPx = portraitDiameterPx(host) / 2;
   if (refRadiusPx <= 0) {
     refRadiusPx = AURA_REF_PORTRAIT_RADIUS_PX;
   }
 
-  const manual = parseFloat(getComputedStyle(host).getPropertyValue("--aura-draw-scale"));
+  const manual = parseFloat(
+    getComputedStyle(host).getPropertyValue("--aura-draw-scale"),
+  );
   const boost = Number.isFinite(manual) && manual > 0 ? manual : 1;
   return (portraitRadiusPx / refRadiusPx) * boost;
 }

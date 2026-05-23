@@ -1,12 +1,14 @@
 import { motion, useReducedMotion } from "framer-motion";
-import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { EASE_OUT } from "../lib/motion";
-import { AssistantAiAura } from "./AssistantAiAura";
+import {
+  AssistantAiAura,
+  type AuraPortrait,
+} from "./AssistantAiAura";
 
 /** Small ring centered on screen during bootstrap load. */
 const LOADER_CENTER_SCALE = 0.56;
 const DOCK_DURATION_S = 1.08;
-const LISA_FADE_DURATION_S = 0.5;
 
 export type BootstrapPhase = "loading" | "docking" | "ready";
 
@@ -18,21 +20,20 @@ interface DockTransform {
 interface Props {
   phase: BootstrapPhase;
   onDocked: () => void;
-  children: ReactNode;
+  portrait: AuraPortrait;
 }
 
 /**
  * One persistent AI aura (same canvas) for loader → welcome.
- * Lisa stays hidden until the ring finishes moving; then fades in.
+ * Lisa and the ring travel together from the first frame.
  */
-export function BootstrapAuraDock({ phase, onDocked, children }: Props) {
+export function BootstrapAuraDock({ phase, onDocked, portrait }: Props) {
   const reduceMotion = useReducedMotion();
   const anchorRef = useRef<HTMLDivElement>(null);
   const [centerOffset, setCenterOffset] = useState<DockTransform>({ x: 0, y: 0 });
 
   const isLoading = phase === "loading";
   const isDocking = phase === "docking";
-  const ringAtRest = phase === "ready";
   const dockMotion = isDocking && !reduceMotion;
 
   useLayoutEffect(() => {
@@ -93,31 +94,15 @@ export function BootstrapAuraDock({ phase, onDocked, children }: Props) {
         }}
       >
         <AssistantAiAura
+          portrait={portrait}
+          portraitOpacity={isLoading ? 0 : 1}
           className={[
             "welcome-intro-avatar",
             isLoading ? "bootstrap-aura-dock__aura--loading" : "",
           ]
             .filter(Boolean)
             .join(" ")}
-        >
-          <motion.div
-            className={[
-              "bootstrap-aura-dock__portrait",
-              !ringAtRest ? "bootstrap-aura-dock__portrait--hidden" : "",
-            ]
-              .filter(Boolean)
-              .join(" ")}
-            initial={false}
-            animate={{ opacity: ringAtRest ? 1 : 0 }}
-            transition={{
-              duration: ringAtRest && !reduceMotion ? LISA_FADE_DURATION_S : 0,
-              ease: EASE_OUT,
-            }}
-            aria-hidden={!ringAtRest}
-          >
-            {children}
-          </motion.div>
-        </AssistantAiAura>
+        />
       </motion.div>
     </div>
   );

@@ -1,7 +1,6 @@
 import type { AssistantGesture } from "../lib/assistantGestures";
 import { confirmationHoldMs } from "../lib/timing";
 import { AssistantAiAura } from "./AssistantAiAura";
-import { AssistantAvatar } from "./AssistantAvatar";
 import { AnimatedReplyText } from "./AnimatedReplyText";
 import { ReplyLoadingDots } from "./ReplyLoadingDots";
 import { ReplyWaitProgress } from "./ReplyWaitProgress";
@@ -28,9 +27,10 @@ export function MicroReplyBubble({
         aria-busy={loading}
       >
         {gesture && (
-          <AssistantAiAura className="welcome-intro-avatar micro-reply-avatar">
-            <AssistantAvatar gesture={gesture} size="lg" />
-          </AssistantAiAura>
+          <AssistantAiAura
+            className="welcome-intro-avatar micro-reply-avatar"
+            portrait={{ src: gesture.src, alt: gesture.label }}
+          />
         )}
         <div className="micro-reply-body">
           {loading ? (
