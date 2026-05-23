@@ -81,3 +81,6 @@ temp/
 
 # Cursor / agent workspace artifacts (not product source)
 .cursor/
+
+# AI Skills
+.ftp-servers.yml
