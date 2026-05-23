@@ -53,7 +53,7 @@ yarn-error.log
 /storage/logs/*
 !/storage/logs/.gitignore
 
-# Node / Vite / React (prototype & future SPA)
+# Node / Vite / React
 node_modules/
 dist/
 build/
@@ -71,6 +71,7 @@ docker-compose.override.yml
 *.sql
 *.sqlite
 *.sqlite-journal
+/database/*.sqlite*
 
 # Logs & temp
 *.log
@@ -79,8 +80,14 @@ tmp/
 temp/
 .cache/
 
-# Cursor / agent workspace artifacts (not product source)
+# Cursor / agent workspace artifacts
 .cursor/
 
-# AI Skills
-.ftp-servers.yml
+# Laravel defaults
+/.phpunit.cache
+/.fleet
+/.nova
+/.zed
+.phpactor.json
+.env.backup
+.env.production

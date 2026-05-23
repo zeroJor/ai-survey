@@ -1,6 +1,6 @@
 # Authentication
 
-**Last updated:** 2026-05-21
+**Last updated:** 2026-05-22
 
 ---
 
@@ -10,7 +10,7 @@
 
 | Flow | Credential | After success |
 |------|------------|---------------|
-| Client entry | Query `t` = **action JWT** (7d) | **Interview session cookie** (2h, sliding) |
+| Client entry | Query `t` = **action JWT** (7d) | **Interview session cookie** (7d max, sliding) |
 | Client API | Interview session cookie | — |
 | Admin | Google OAuth | **Laravel session cookie** (studio user) |
 
@@ -29,12 +29,12 @@
 
 | Property | Value |
 |----------|--------|
-| Name | TBD in implementation (e.g. `interview_session`) |
+| Name | `interview_session` (see `config/interview.php`) |
 | Value | `interview_sessions.id` (UUID) |
 | HttpOnly | yes |
 | Secure | yes (production) |
 | SameSite | `Lax` |
-| TTL | **2 hours**, sliding on each authenticated API call |
+| TTL | **7 days** maximum, sliding on each authenticated API call |
 
 Expired cookie + valid invite JWT → client re-opens `/invites?t=…` → new session.
 
@@ -49,11 +49,24 @@ All `/api/talk`, `/api/answers` (except none), `/api/talk/complete`:
 
 ## Admin
 
-- **Google OAuth** (Socialite); allow only `@idwasoft.com`.
-- On success: standard **Laravel web session cookie** (same cookie-based model as client — no Bearer tokens).
-- Middleware on `/api/admin/*`: authenticated `User`.
+### OAuth entry (web routes)
 
-Admin and interview cookies are **separate** guards / cookie names.
+| Method | Path | Action |
+|--------|------|--------|
+| `GET` | `/auth/google` | Redirect to Google (Socialite) |
+| `GET` | `/auth/google/callback` | Upsert `users` row, start Laravel session, redirect `/admin` |
+| `POST` | `/auth/logout` | Invalidate session, redirect `/admin` |
+
+- **Google OAuth** via `laravel/socialite`; allow only `@idwasoft.com` (`config/admin.php` → `allowed_email_domain`).
+- Personal Gmail / other domains → redirect `/admin?auth=denied` (no session).
+- On success: standard **Laravel session cookie** (`web` guard) — no Bearer tokens.
+
+### Admin API
+
+- `GET /api/admin/settings` (and future `/api/admin/*`) use middleware `auth` + `admin`.
+- `admin` rejects users whose email is not `@idwasoft.com` (JSON `401`).
+
+Admin and interview cookies are **separate**: `laravel_session` (or app session name) vs `interview_session`. Logging in as studio does not set the interview cookie; completing `/invites?t=…` does not grant admin API access.
 
 ---
 

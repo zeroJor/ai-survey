@@ -13,7 +13,7 @@
 | DB (local) | **Docker** for MySQL while developing |
 | Client entry URL | `/invites?t={actionJwt}` |
 | Post-auth URL | `/talk` |
-| Entry auth | Action JWT in `t`; then **HttpOnly session cookie** (2h) |
+| Entry auth | Action JWT in `t`; then **HttpOnly session cookie** (7d max, sliding) |
 | Action JWT TTL | 7 days |
 | Ongoing API auth | **Cookies only** (no access/refresh JWT) — see [auth.md](./auth.md) |
 | Client API | `GET /api/talk`, `PATCH /api/talk`, `POST /api/answers`, `POST /api/talk/complete` |
@@ -35,4 +35,4 @@
 
 ## Open tension
 
-- Session 2h vs re-entry via invite JWT within 7d
+- (none for session TTL — aligned to 7d sliding per product §1.5)

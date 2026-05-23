@@ -1,0 +1,62 @@
+[
+  {
+    "id": "atenta",
+    "name": "Seria y atenta",
+    "image": "/assets/assistant/lisa-atenta.png",
+    "description": "Omitir pregunta, respuesta vacía o tema delicado"
+  },
+  {
+    "id": "smile",
+    "name": "Sonrisa amable",
+    "image": "/assets/assistant/lisa.png",
+    "description": "Tono positivo, agradecimiento o entusiasmo"
+  },
+  {
+    "id": "think",
+    "name": "Pensativa",
+    "image": "/assets/assistant/lisa-think.png",
+    "description": "Duda, incertidumbre o respuesta compleja"
+  },
+  {
+    "id": "nod",
+    "name": "De acuerdo, sigamos",
+    "image": "/assets/assistant/lisa-seria.png",
+    "description": "Afirmación breve sin matiz emocional fuerte"
+  },
+  {
+    "id": "sorprendida",
+    "name": "Sorprendida",
+    "image": "/assets/assistant/lisa-sorprendida.png",
+    "description": "Dato inesperado o cifra que destaca"
+  },
+  {
+    "id": "complice",
+    "name": "Guiño cómplice",
+    "image": "/assets/assistant/lisa-complice.png",
+    "description": "Complicidad coloquial sin ironía negativa"
+  },
+  {
+    "id": "risa",
+    "name": "Qué risa",
+    "image": "/assets/assistant/lisa-risa.png",
+    "description": "Humor explícito"
+  },
+  {
+    "id": "seria",
+    "name": "Neutral y seria",
+    "image": "/assets/assistant/lisa-seria.png",
+    "description": "Respuesta neutra o factual; fallback"
+  },
+  {
+    "id": "enSerio",
+    "name": "¿Es en serio?",
+    "image": "/assets/assistant/lisa-en-serio.png",
+    "description": "Sorpresa escéptica o incredulidad"
+  },
+  {
+    "id": "sarcasmo",
+    "name": "Harta / sarcasmo",
+    "image": "/assets/assistant/lisa-sarcasmo.png",
+    "description": "Ironía o exasperación"
+  }
+]

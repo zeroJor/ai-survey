@@ -54,6 +54,7 @@ Table names: Laravel plural snake_case.
 | `id` | BIGINT PK | |
 | `email` | VARCHAR(255) UNIQUE | Identity; Google login matches here |
 | `name` | VARCHAR(255) NULL | |
+| `password` | VARCHAR(255) NULL | Nullable for Google OAuth studio users |
 | `created_at` | TIMESTAMP | |
 | `updated_at` | TIMESTAMP | |
 
@@ -269,6 +270,9 @@ Cookie value = `id` (UUID).
 | `question_code` | VARCHAR(16) NULL | For `micro_reply` |
 | `content` | TEXT | |
 | `sequence` | UNSIGNED INT | Order in thread |
+| `sentiment_id` | VARCHAR(32) NULL | Lisa expression id when applicable |
+| `register` | VARCHAR(16) NULL | `tu`, `usted`, `neutral` |
+| `source` | VARCHAR(16) DEFAULT `template` | `template` or `llm` |
 | `created_at` | TIMESTAMP | |
 | `updated_at` | TIMESTAMP | |
 
@@ -284,11 +288,9 @@ Cookie value = `id` (UUID).
 |--------|------|-------|
 | `id` | BIGINT PK | |
 | `interview_id` | CHAR(36) FK → `interviews.id` UNIQUE | One per interview |
-| `summary` | LONGTEXT NULL | |
-| `psychology_notes` | LONGTEXT NULL | |
-| `strategy_notes` | LONGTEXT NULL | |
-| `next_steps` | LONGTEXT NULL | |
-| `generated_at` | TIMESTAMP | |
+| `analysis_json` | JSON NULL | Structured studio analysis (on-demand, E7.3) |
+| `schema_version` | VARCHAR(16) DEFAULT `1` | Version of `analysis_json` shape |
+| `generated_at` | TIMESTAMP NULL | Set when analysis is generated |
 | `created_at` | TIMESTAMP | |
 | `updated_at` | TIMESTAMP | |
 

@@ -83,11 +83,11 @@ Three distinct LLM use cases:
 |--------|------|----------|
 | **Micro-reply** | After each answer (phases 1–5) | Client (on screen) |
 | **Farewell message** | On final submit | Client (on screen + reopen) |
-| **Studio prep summary** | On final submit (async OK) | Studio (admin panel only) |
+| **Studio prep summary** | On demand from admin (button) | Studio (admin panel only) |
 
 ### 4.1 Studio prep summary (MVP required)
 
-Generated from full conversation + invite context + **editable studio process** from admin.
+Generated on demand from the admin panel (not on client `POST /api/talk/complete`) from full conversation + invite context + **editable studio process** from admin.
 
 **Must cover:**
 

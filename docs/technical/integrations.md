@@ -1,6 +1,6 @@
 # Integrations (MVP)
 
-**Last updated:** 2026-05-21
+**Last updated:** 2026-05-22
 
 ---
 
@@ -16,8 +16,8 @@ Uses `settings_channels` rows with `type = email` and JSON `config` (see [databa
 
 | Event | Recipient | When |
 |-------|-----------|------|
-| **Studio alert** | Configured address(es) in channel `config` | `POST /api/talk/complete` — “interview completed” (link to admin review) |
-| **Client copy** | `invites.client_email` | Same request — if email set and channel enabled; delightful HTML template |
+| **Studio alert** | Configured address(es) in channel `config` | `InterviewCompleted` event — metadata + admin link (`delivery_records.channel_key` = channel key, e.g. `studio_email`) |
+| **Client copy** | `invites.client_email` | Same event — if email set; HTML Q/A template (`delivery_records.channel_key` = `client_copy`) |
 
 ---
 

@@ -1,6 +1,6 @@
 # Technical (Phase 1)
 
-**Workflow:** `requierements` → **`technical`** → `plan` → `prototype`
+**Workflow:** `requierements` → **`technical`** → `plan` → `prototype` (referencia) → código en raíz
 
 | Document | Scope |
 |----------|--------|
@@ -16,3 +16,5 @@
 Domain entities (requirements): [domain-models.md](../requierements/domain-models.md)
 
 **Requirements:** [functional-requirements.md](../requierements/functional-requirements.md), [ux-requirements.md](../requierements/ux-requirements.md)
+
+**Implementation plan:** [../plan/implementation-plan.md](../plan/implementation-plan.md)

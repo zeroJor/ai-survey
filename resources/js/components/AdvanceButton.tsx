@@ -1,0 +1,170 @@
+import { useCallback, useEffect, useState } from "react";
+import { AnimatedReplyText } from "./AnimatedReplyText";
+
+/** Keeps the mobile chip above the on-screen keyboard (visual viewport). */
+function useAdvanceChipLift() {
+  const [liftPx, setLiftPx] = useState(0);
+
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!vv) return;
+
+    const mq = window.matchMedia("(max-width: 1023px)");
+
+    const update = () => {
+      if (!mq.matches) {
+        setLiftPx(0);
+        return;
+      }
+      setLiftPx(Math.max(0, window.innerHeight - vv.height - vv.offsetTop));
+    };
+
+    update();
+    vv.addEventListener("resize", update);
+    vv.addEventListener("scroll", update);
+    mq.addEventListener("change", update);
+    window.addEventListener("orientationchange", update);
+
+    return () => {
+      vv.removeEventListener("resize", update);
+      vv.removeEventListener("scroll", update);
+      mq.removeEventListener("change", update);
+      window.removeEventListener("orientationchange", update);
+    };
+  }, []);
+
+  return liftPx;
+}
+
+interface Props {
+  onClick: () => void;
+  disabled?: boolean;
+  /** Desktop edge chevron (and aria). */
+  label?: string;
+  /** Mobile bottom bar copy; defaults to `label`. */
+  barLabel?: string;
+  /** Desktop: skip link to the left of chevron on hover when field is empty. */
+  skipLabel?: string;
+  showFloatingSkip?: boolean;
+  /** Desktop: large chevron (animates up from compact when user types). */
+  edgeChevronProminent?: boolean;
+  /** Desktop edge chevron; off on welcome (uses inline Empecemos). */
+  showEdgeChevron?: boolean;
+}
+
+/** Mobile: fixed chip (bottom-right). Desktop: right-edge zone with optional hover skip. */
+export function AdvanceButton({
+  onClick,
+  disabled = false,
+  label = "Continuar",
+  barLabel,
+  skipLabel,
+  showFloatingSkip = false,
+  edgeChevronProminent = true,
+  showEdgeChevron = true,
+}: Props) {
+  const mobileLabel = barLabel ?? label;
+  const chipLiftPx = useAdvanceChipLift();
+  const [edgeHover, setEdgeHover] = useState(false);
+
+  const onEdgeEnter = useCallback(() => setEdgeHover(true), []);
+  const onEdgeLeave = useCallback(() => setEdgeHover(false), []);
+
+  return (
+    <>
+      <button
+        type="button"
+        className={[
+          "advance-chip",
+          showFloatingSkip ? "advance-chip--skip" : "",
+        ]
+          .filter(Boolean)
+          .join(" ")}
+        onClick={onClick}
+        disabled={disabled}
+        aria-label={label}
+        style={
+          chipLiftPx > 0
+            ? {
+                bottom: `calc(1rem + env(safe-area-inset-bottom, 0px) + ${chipLiftPx}px)`,
+              }
+            : undefined
+        }
+      >
+        <span className="advance-chip-label">{mobileLabel}</span>
+        <span className="advance-chip-icon" aria-hidden>
+          <svg
+            className="advance-chip-chevron"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M10 6l6 6-6 6"
+              stroke="currentColor"
+              strokeWidth="1.75"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </span>
+      </button>
+      {showEdgeChevron && (
+        <div
+          className={[
+            "advance-edge-zone",
+            showFloatingSkip ? "advance-edge-zone--skip" : "",
+          ]
+            .filter(Boolean)
+            .join(" ")}
+          onMouseEnter={showFloatingSkip ? onEdgeEnter : undefined}
+          onMouseLeave={showFloatingSkip ? onEdgeLeave : undefined}
+          onFocusCapture={showFloatingSkip ? onEdgeEnter : undefined}
+          onBlurCapture={(e) => {
+            if (!showFloatingSkip) return;
+            if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
+              onEdgeLeave();
+            }
+          }}
+        >
+          {showFloatingSkip && skipLabel && (
+            <button
+              type="button"
+              className={[
+                "advance-edge-skip",
+                edgeHover ? "advance-edge-skip--active" : "",
+              ]
+                .filter(Boolean)
+                .join(" ")}
+              onClick={onClick}
+              disabled={disabled}
+              tabIndex={edgeHover ? 0 : -1}
+            >
+              <AnimatedReplyText
+                text={skipLabel}
+                className="advance-edge-skip-text"
+                play={edgeHover}
+              />
+            </button>
+          )}
+          <button
+            type="button"
+            className={[
+              "advance-btn advance-btn--edge",
+              edgeChevronProminent ? "advance-btn--edge--prominent" : "",
+            ]
+              .filter(Boolean)
+              .join(" ")}
+            onClick={onClick}
+            disabled={disabled}
+            aria-label={label}
+          >
+            <span className="advance-icon" aria-hidden>
+              ›
+            </span>
+          </button>
+        </div>
+      )}
+    </>
+  );
+}

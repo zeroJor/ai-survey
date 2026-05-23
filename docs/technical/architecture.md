@@ -87,7 +87,7 @@ sequenceDiagram
 
 - Set on successful `/invites?t=` handling.
 - **HttpOnly**, **Secure** (prod), **SameSite=Lax**.
-- **TTL: 2 hours** (sliding refresh on activity — define in implementation).
+- **TTL: 7 days** maximum (sliding refresh on each authenticated API call).
 - Binds browser to one `interview` row server-side.
 
 **Resume:** If cookie expired but JWT still valid, customer re-opens `/invites?t=…` → new cookie → `GET /api/talk` restores `progress`.

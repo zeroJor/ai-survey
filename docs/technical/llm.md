@@ -1,6 +1,6 @@
 # LLM integration
 
-**Last updated:** 2026-05-21
+**Last updated:** 2026-05-22
 
 ---
 
@@ -117,8 +117,8 @@ System prompts: short, fixed; reuse across calls (use provider prompt caching if
 | Call site | Method | When LLM off |
 |-----------|--------|--------------|
 | `POST /api/answers` | `microReply` | Random/rotating template from `content/training/micro-replies/` |
-| `POST /api/talk/complete` | `farewell` | Static template (tú/usted variants) |
-| `POST /api/talk/complete` | `studioPrepSummary` | Minimal stub or “LLM disabled — review raw answers” in artifact fields |
+| `POST /api/talk/complete` | `farewell` | Static template (tú/usted variants) — **no Gemini in MVP** |
+| `POST /api/admin/interviews/{id}/generate-summary` | `studioPrepSummary` | Full JSON sections; requires `llm_enabled` |
 
 ---
 
