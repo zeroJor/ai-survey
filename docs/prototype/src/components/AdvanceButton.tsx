@@ -74,7 +74,12 @@ export function AdvanceButton({
     <>
       <button
         type="button"
-        className="advance-chip"
+        className={[
+          "advance-chip",
+          showFloatingSkip ? "advance-chip--skip" : "",
+        ]
+          .filter(Boolean)
+          .join(" ")}
         onClick={onClick}
         disabled={disabled}
         aria-label={label}
@@ -88,7 +93,20 @@ export function AdvanceButton({
       >
         <span className="advance-chip-label">{mobileLabel}</span>
         <span className="advance-chip-icon" aria-hidden>
-          ›
+          <svg
+            className="advance-chip-chevron"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M10 6l6 6-6 6"
+              stroke="currentColor"
+              strokeWidth="1.75"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
         </span>
       </button>
       {showEdgeChevron && (
