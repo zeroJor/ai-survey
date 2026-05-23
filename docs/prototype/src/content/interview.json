@@ -174,7 +174,7 @@
     "farewellUsted": "¡Listo, {{contactName}}!\n\nGracias por platicar con nosotros sobre *{{businessName}}*. Pronto nos pondremos en contacto para agendar la *llamada de seguimiento*.",
     "revokedTitle": "Este enlace ya no está disponible",
     "revokedBody": "Si cree que se trata de un *error*, escríbanos y con gusto le ayudamos.",
-    "skipLabel": "Prefiero no contestar",
+    "skipLabel": "Saltar",
     "continueLabel": "Continuar",
     "microRepliesTu": [
       "Va, buen punto.",

@@ -1,5 +1,40 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AnimatedReplyText } from "./AnimatedReplyText";
+
+/** Keeps the mobile chip above the on-screen keyboard (visual viewport). */
+function useAdvanceChipLift() {
+  const [liftPx, setLiftPx] = useState(0);
+
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!vv) return;
+
+    const mq = window.matchMedia("(max-width: 1023px)");
+
+    const update = () => {
+      if (!mq.matches) {
+        setLiftPx(0);
+        return;
+      }
+      setLiftPx(Math.max(0, window.innerHeight - vv.height - vv.offsetTop));
+    };
+
+    update();
+    vv.addEventListener("resize", update);
+    vv.addEventListener("scroll", update);
+    mq.addEventListener("change", update);
+    window.addEventListener("orientationchange", update);
+
+    return () => {
+      vv.removeEventListener("resize", update);
+      vv.removeEventListener("scroll", update);
+      mq.removeEventListener("change", update);
+      window.removeEventListener("orientationchange", update);
+    };
+  }, []);
+
+  return liftPx;
+}
 
 interface Props {
   onClick: () => void;
@@ -17,7 +52,7 @@ interface Props {
   showEdgeChevron?: boolean;
 }
 
-/** Mobile: full-width black bar. Desktop: right-edge zone with optional hover skip. */
+/** Mobile: fixed chip (bottom-right). Desktop: right-edge zone with optional hover skip. */
 export function AdvanceButton({
   onClick,
   disabled = false,
@@ -29,6 +64,7 @@ export function AdvanceButton({
   showEdgeChevron = true,
 }: Props) {
   const mobileLabel = barLabel ?? label;
+  const chipLiftPx = useAdvanceChipLift();
   const [edgeHover, setEdgeHover] = useState(false);
 
   const onEdgeEnter = useCallback(() => setEdgeHover(true), []);
@@ -36,19 +72,25 @@ export function AdvanceButton({
 
   return (
     <>
-      <nav className="advance-bar" aria-label="Avanzar">
-        <button
-          type="button"
-          className="advance-bar-btn"
-          onClick={onClick}
-          disabled={disabled}
-        >
-          <span className="advance-bar-label">{mobileLabel}</span>
-          <span className="advance-bar-icon" aria-hidden>
-            ›
-          </span>
-        </button>
-      </nav>
+      <button
+        type="button"
+        className="advance-chip"
+        onClick={onClick}
+        disabled={disabled}
+        aria-label={label}
+        style={
+          chipLiftPx > 0
+            ? {
+                bottom: `calc(1rem + env(safe-area-inset-bottom, 0px) + ${chipLiftPx}px)`,
+              }
+            : undefined
+        }
+      >
+        <span className="advance-chip-label">{mobileLabel}</span>
+        <span className="advance-chip-icon" aria-hidden>
+          ›
+        </span>
+      </button>
       {showEdgeChevron && (
         <div
           className={[

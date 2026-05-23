@@ -94,6 +94,22 @@
     @apply flex min-h-0 flex-1 flex-col items-stretch justify-start;
   }
 
+  /* Question textarea fills remaining viewport below prompt (mobile only). */
+  @media (max-width: 1023px) {
+    .step-with-advance--question .step-grid {
+      align-items: stretch;
+    }
+
+    .step-with-advance--question .step-answers {
+      justify-content: flex-start;
+    }
+
+    .step-answers-inner--question .answer-field--fill {
+      @apply min-h-0 flex-1;
+      height: 100%;
+    }
+  }
+
   /* —— Step layout: prompt left, answers/options right —— */
   .step-grid {
     @apply grid w-full items-start gap-8 py-2 sm:gap-10 lg:grid-cols-12 lg:items-center lg:gap-16 lg:py-0;
@@ -107,22 +123,22 @@
     @apply relative flex flex-col justify-center pt-8 lg:col-span-6 lg:col-start-7 lg:border-l lg:border-idwa-line lg:pt-0 lg:pl-16 xl:col-span-5 xl:col-start-8;
   }
 
-  /* Separador pregunta ↔ respuesta/opciones — ancho completo del viewport en móvil */
-  .step-answers::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: 100vw;
-    height: 1px;
-    transform: translateX(-50%);
-    background: var(--line);
-    pointer-events: none;
-  }
+  /*
+   * Móvil: el grid va a sangre; el padding vive en prompt/answers-inner.
+   * El separador es border-top (ancho real del bloque), no un pseudo 100vw.
+   */
+  @media (max-width: 1023px) {
+    .shell-inner:has(.step-grid) {
+      @apply px-0;
+    }
 
-  @media (min-width: 1024px) {
-    .step-answers::before {
-      content: none;
+    .step-prompt,
+    .step-answers-inner {
+      @apply px-6 sm:px-10 md:px-14;
+    }
+
+    .step-answers {
+      @apply border-t border-idwa-line;
     }
   }
 
@@ -130,18 +146,10 @@
     @apply flex w-full flex-col justify-center;
   }
 
-  .step-with-advance {
-    padding-bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px));
-  }
-
   @media (min-width: 1024px) {
     .step-with-advance {
       padding-bottom: 0;
     }
-  }
-
-  .welcome-intro-stage--advance {
-    padding-bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px));
   }
 
   @media (min-width: 1024px) {
@@ -154,64 +162,57 @@
     @apply lg:pr-28;
   }
 
-  /* —— Advance: mobile bar (separator only) + desktop edge chevron —— */
-  .advance-bar {
+  /* —— Advance: mobile chip + desktop edge chevron —— */
+  .advance-chip {
     position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 30;
-    border-top: 1px solid var(--line);
-    background: var(--page);
-    padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+    right: clamp(1rem, 4vw, 1.5rem);
+    bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+    z-index: 40;
+    display: inline-flex;
+    max-width: min(calc(100vw - 2rem), 20rem);
+    align-items: center;
+    gap: 0.2rem;
+    border: 0;
+    border-radius: 9999px;
+    background: var(--ink);
+    padding: 0.7rem 0.95rem 0.7rem 1.15rem;
+    color: #fff;
+    cursor: pointer;
+    box-shadow:
+      0 4px 20px rgb(0 0 0 / 0.14),
+      0 1px 3px rgb(0 0 0 / 0.08);
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease,
+      bottom 0.15s ease;
+  }
+
+  .advance-chip:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+
+  .advance-chip:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+  }
+
+  .advance-chip-label {
+    @apply text-left font-body text-sm font-semibold leading-tight tracking-tight;
+  }
+
+  .advance-chip-icon {
+    flex-shrink: 0;
+    font-family: "Barlow Condensed", system-ui, sans-serif;
+    font-size: 1.65rem;
+    font-weight: 300;
+    line-height: 1;
+    user-select: none;
   }
 
   @media (min-width: 1024px) {
-    .advance-bar {
+    .advance-chip {
       display: none;
     }
-  }
-
-  .advance-bar-btn {
-    position: relative;
-    box-sizing: border-box;
-    display: flex;
-    width: 100%;
-    min-height: 3.75rem;
-    align-items: center;
-    justify-content: center;
-    border: 0;
-    background: transparent;
-    padding: 0.875rem 0;
-    color: var(--ink);
-    cursor: pointer;
-    transition: opacity 0.2s ease;
-  }
-
-  .advance-bar-btn:disabled {
-    cursor: not-allowed;
-    opacity: 0.35;
-  }
-
-  .advance-bar-label {
-    @apply flex w-full items-center justify-center px-[clamp(3rem,14vw,4.5rem)] text-center font-body text-base font-semibold leading-none tracking-tight text-idwa-ink;
-  }
-
-  .advance-bar-icon {
-    position: absolute;
-    right: clamp(1.25rem, 5vw, 2rem);
-    top: 0;
-    bottom: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: "Barlow Condensed", system-ui, sans-serif;
-    font-size: clamp(2.75rem, 12vw, 3.75rem);
-    font-weight: 300;
-    line-height: 1;
-    color: var(--ink);
-    user-select: none;
-    pointer-events: none;
   }
 
   .advance-edge-zone,
