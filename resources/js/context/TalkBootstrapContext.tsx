@@ -2,6 +2,7 @@ import {
     createContext,
     useCallback,
     useContext,
+    useEffect,
     useMemo,
     useState,
     type Dispatch,
@@ -11,8 +12,9 @@ import {
 import type { TalkBootstrap } from '@/types/talk';
 
 interface TalkBootstrapContextValue {
-    bootstrap: TalkBootstrap | null;
-    setBootstrap: Dispatch<SetStateAction<TalkBootstrap | null>>;
+    bootstrap: TalkBootstrap;
+    setBootstrap: Dispatch<SetStateAction<TalkBootstrap>>;
+    bootstrapReady: boolean;
     unauthorized: boolean;
     bootstrapError: Error | null;
 }
@@ -24,20 +26,25 @@ const TalkBootstrapContext = createContext<TalkBootstrapContextValue | null>(
 export function TalkBootstrapProvider({
     children,
     initialBootstrap,
+    bootstrapReady = false,
     unauthorized = false,
     bootstrapError = null,
 }: {
     children: ReactNode;
-    initialBootstrap: TalkBootstrap | null;
+    initialBootstrap: TalkBootstrap;
+    bootstrapReady?: boolean;
     unauthorized?: boolean;
     bootstrapError?: Error | null;
 }) {
-    const [bootstrap, setBootstrapState] = useState<TalkBootstrap | null>(
-        initialBootstrap,
-    );
+    const [bootstrap, setBootstrapState] =
+        useState<TalkBootstrap>(initialBootstrap);
+
+    useEffect(() => {
+        setBootstrapState(initialBootstrap);
+    }, [initialBootstrap]);
 
     const setBootstrap = useCallback(
-        (data: SetStateAction<TalkBootstrap | null>) => {
+        (data: SetStateAction<TalkBootstrap>) => {
             setBootstrapState(data);
         },
         [],
@@ -47,10 +54,11 @@ export function TalkBootstrapProvider({
         () => ({
             bootstrap,
             setBootstrap,
+            bootstrapReady,
             unauthorized,
             bootstrapError,
         }),
-        [bootstrap, setBootstrap, unauthorized, bootstrapError],
+        [bootstrap, setBootstrap, bootstrapReady, unauthorized, bootstrapError],
     );
 
     return (

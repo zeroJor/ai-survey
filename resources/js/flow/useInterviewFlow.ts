@@ -54,17 +54,14 @@ function isGestureId(value: string): value is AssistantGestureId {
 }
 
 export function useInterviewFlow(scenario: Scenario) {
-    const { bootstrap, setBootstrap } = useTalkBootstrap();
-    if (!bootstrap) {
-        throw new Error('useInterviewFlow requires bootstrap');
-    }
+    const { bootstrap, setBootstrap, bootstrapReady } = useTalkBootstrap();
 
     const content = bootstrap.content;
     const invite = bootstrap.invite;
     const questionList = content.questions;
     const initial = useMemo(
         () => initialFlowState(bootstrap, scenario),
-        // eslint-disable-next-line react-hooks/exhaustive-deps -- only on mount
+        // eslint-disable-next-line react-hooks/exhaustive-deps -- splash mount only
         [],
     );
 
@@ -93,6 +90,24 @@ export function useInterviewFlow(scenario: Scenario) {
     const [answerError, setAnswerError] = useState<string | null>(null);
     const [completeError, setCompleteError] = useState<string | null>(null);
     const completeRequested = useRef(false);
+    const hydratedFromApi = useRef(false);
+
+    useEffect(() => {
+        if (!bootstrapReady || bootstrap.contentVersion === 'splash') {
+            return;
+        }
+        if (hydratedFromApi.current) {
+            return;
+        }
+        hydratedFromApi.current = true;
+
+        const next = initialFlowState(bootstrap, scenario);
+        setFlowStep(next.flowStep);
+        setRegister(next.register);
+        setQuestionIndex(next.questionIndex);
+        setAnswers(next.answers);
+        setToneSelected(next.toneSelected);
+    }, [bootstrapReady, bootstrap, scenario]);
 
     const currentQuestion = questionList[questionIndex] ?? null;
     const currentPhase = currentQuestion

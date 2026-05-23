@@ -20,6 +20,7 @@ import { ToneScreen } from '@/screens/ToneScreen';
 import { phaseIntroHoldMs } from '@/lib/timing';
 import { fillTemplate } from '@/data/mockInvite';
 import { EASE_OUT } from '@/lib/motion';
+import { createSplashBootstrap } from '@/lib/splashBootstrap';
 import type { Register, Scenario } from '@/types/talk';
 
 const REVOKED_FALLBACK_COPY = {
@@ -36,7 +37,13 @@ function usesBootstrapDock(scenario: Scenario): boolean {
     );
 }
 
-function TalkPageContent({ scenario }: { scenario: Scenario }) {
+function TalkPageContent({
+    scenario,
+    bootstrapReady,
+}: {
+    scenario: Scenario;
+    bootstrapReady: boolean;
+}) {
     const reduceMotion = useReducedMotion();
     const bootstrapDock = usesBootstrapDock(scenario);
 
@@ -74,6 +81,9 @@ function TalkPageContent({ scenario }: { scenario: Scenario }) {
     } = flow;
 
     useEffect(() => {
+        if (!bootstrapReady) {
+            return;
+        }
         if (!bootstrapDock || flowStep !== 'assistantIntro') {
             setBootstrapPhase('ready');
             return;
@@ -81,7 +91,7 @@ function TalkPageContent({ scenario }: { scenario: Scenario }) {
         if (bootstrapPhase === 'loading') {
             setBootstrapPhase('docking');
         }
-    }, [bootstrapDock, bootstrapPhase, flowStep]);
+    }, [bootstrapReady, bootstrapDock, bootstrapPhase, flowStep]);
 
     const interviewProgressPercent = useMemo(() => {
         switch (flowStep) {
@@ -127,6 +137,7 @@ function TalkPageContent({ scenario }: { scenario: Scenario }) {
     );
 
     const advanceEnabled =
+        bootstrapReady &&
         !isSubmitting &&
         flowStep !== 'microReply' &&
         flowStep !== 'farewell' &&
@@ -332,32 +343,19 @@ function UnauthorizedView() {
     );
 }
 
-function BootstrapLoading() {
-    return (
-        <div className="bootstrap-backdrop" aria-busy="true" aria-label="Cargando">
-            <div className="bootstrap-aura-anchor bootstrap-aura-anchor--center">
-                <div className="bootstrap-aura-dock__aura bootstrap-aura-dock__aura--loading" />
-            </div>
-        </div>
-    );
-}
-
 export default function TalkPage() {
     const scenario = useMemo(
         () => parseScenario(window.location.search),
         [],
     );
+    const splashBootstrap = useMemo(() => createSplashBootstrap(), []);
     const { ready, bootstrap, unauthorized, error } = useAppBootstrap();
 
-    if (!ready) {
-        return <BootstrapLoading />;
-    }
-
-    if (unauthorized || !bootstrap) {
+    if (ready && unauthorized) {
         return <UnauthorizedView />;
     }
 
-    if (error) {
+    if (ready && (error || !bootstrap)) {
         return (
             <InterviewShell progressPercent={0} showProgressLine={false}>
                 <p className="mx-auto max-w-md text-center text-idwa-muted">
@@ -369,8 +367,11 @@ export default function TalkPage() {
     }
 
     return (
-        <TalkBootstrapProvider initialBootstrap={bootstrap}>
-            <TalkPageContent scenario={scenario} />
+        <TalkBootstrapProvider
+            initialBootstrap={bootstrap ?? splashBootstrap}
+            bootstrapReady={ready}
+        >
+            <TalkPageContent scenario={scenario} bootstrapReady={ready} />
         </TalkBootstrapProvider>
     );
 }
