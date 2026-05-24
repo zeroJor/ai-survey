@@ -6,6 +6,7 @@ use App\Models\InterviewTemplate;
 use App\Models\Invite;
 use App\Models\User;
 use App\Services\Interview\ActionJwtService;
+use Database\Seeders\AdminUserSeeder;
 use Illuminate\Console\Command;
 
 class InviteDevUrlCommand extends Command
@@ -24,9 +25,13 @@ class InviteDevUrlCommand extends Command
             return self::FAILURE;
         }
 
-        $user = User::query()->firstOrCreate(
-            ['email' => 'dev@idwasoft.com'],
-            ['name' => 'Dev Studio', 'password' => null],
+        $user = User::query()->updateOrCreate(
+            ['email' => AdminUserSeeder::DEV_EMAIL],
+            [
+                'name' => 'Dev Studio',
+                'password' => AdminUserSeeder::DEV_PASSWORD,
+                'email_verified_at' => now(),
+            ],
         );
 
         $invite = Invite::query()->create([

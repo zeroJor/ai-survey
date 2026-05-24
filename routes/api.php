@@ -21,7 +21,7 @@ Route::middleware('interview.session')->group(function () {
     Route::post('/talk/complete', [TalkController::class, 'complete']);
 });
 
-Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+Route::middleware(['admin'])->prefix('admin')->group(function () {
     Route::get('/settings', [AdminSettingsController::class, 'show']);
     Route::patch('/settings', [AdminSettingsController::class, 'update']);
     Route::post('/settings/channels', [AdminSettingsController::class, 'storeChannel']);

@@ -53,6 +53,7 @@ All `/api/talk`, `/api/answers` (except none), `/api/talk/complete`:
 
 | Method | Path | Action |
 |--------|------|--------|
+| `POST` | `/auth/login` | Email + password (local/testing only) → Laravel session |
 | `GET` | `/auth/google` | Redirect to Google (Socialite) |
 | `GET` | `/auth/google/callback` | Upsert `users` row, start Laravel session, redirect `/admin` |
 | `POST` | `/auth/logout` | Invalidate session, redirect `/admin` |
@@ -63,8 +64,11 @@ All `/api/talk`, `/api/answers` (except none), `/api/talk/complete`:
 
 ### Admin API
 
-- `GET /api/admin/settings` (and future `/api/admin/*`) use middleware `auth` + `admin`.
-- `admin` rejects users whose email is not `@idwasoft.com` (JSON `401`).
+- `GET /api/admin/settings` (and `/api/admin/*`) use middleware `admin` (`EnsureAdminAuthenticated`).
+- Resolves the studio user from Laravel session (stateful Sanctum SPA).
+- Rejects users whose email is not `@idwasoft.com` (JSON `401`).
+
+**Local password login:** `POST /auth/login` with `{ email, password }` when `ADMIN_PASSWORD_LOGIN=true` (default in `local` / `testing`). Seeded user: `dev@idwasoft.com` / `password`.
 
 Admin and interview cookies are **separate**: `laravel_session` (or app session name) vs `interview_session`. Logging in as studio does not set the interview cookie; completing `/invites?t=…` does not grant admin API access.
 

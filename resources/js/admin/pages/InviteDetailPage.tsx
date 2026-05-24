@@ -8,6 +8,7 @@ import {
     resendInviteCopy,
     revokeAdminInvite,
 } from '@/admin/lib/adminApi';
+import { InterviewChatThread } from '@/admin/components/InterviewChatThread';
 import {
     ARTIFACT_SECTIONS,
     type AdminInviteDetail,
@@ -222,40 +223,7 @@ export function InviteDetailPage() {
                         El cliente aún no ha abierto el enlace.
                     </p>
                 ) : review ? (
-                    <ul className="mt-4 space-y-6">
-                        {review.questions
-                            .filter((q) => q.answer !== null)
-                            .map((q) => (
-                                <li
-                                    key={q.code}
-                                    className="border-b border-gray-100 pb-4 last:border-0"
-                                >
-                                    <p className="text-sm font-medium text-gray-800">
-                                        {q.labelNeutral || q.code}
-                                    </p>
-                                    <p className="mt-1 text-sm text-gray-600">
-                                        {q.answer?.skipped
-                                            ? '(Prefiere no contestar)'
-                                            : q.answer?.body}
-                                    </p>
-                                    {q.microReply && (
-                                        <p className="mt-2 text-sm italic text-[#0077FF]">
-                                            Lisa: {q.microReply.text}
-                                        </p>
-                                    )}
-                                </li>
-                            ))}
-                        {review.farewell && (
-                            <li>
-                                <p className="text-sm font-medium text-gray-800">
-                                    Despedida
-                                </p>
-                                <p className="mt-1 text-sm text-gray-600">
-                                    {review.farewell.content}
-                                </p>
-                            </li>
-                        )}
-                    </ul>
+                    <InterviewChatThread review={review} />
                 ) : null}
             </div>
 

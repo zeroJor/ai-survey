@@ -8,6 +8,8 @@ Items below are **not required** to implement or test **F6** in code (`php artis
 
 ## 1. Google Cloud OAuth (local)
 
+**Shortcut:** after seed, open `/admin` and log in with `dev@idwasoft.com` / `password` (local/testing only). Skip to §2 for Google OAuth when needed.
+
 - [ ] Open [Google Cloud Console](https://console.cloud.google.com/) and select or create a project for Idwasoft / web-interviewer.
 - [ ] Configure the **OAuth consent screen** (Internal or External, as appropriate for your org).
 - [ ] Create credentials → **OAuth client ID** → type **Web application**.

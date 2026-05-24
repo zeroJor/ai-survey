@@ -56,13 +56,21 @@ async function adminFetch<T>(
     }
 
     if (!response.ok) {
-        const message =
-            typeof body === 'object' &&
-            body !== null &&
-            'message' in body &&
-            typeof (body as { message: unknown }).message === 'string'
-                ? (body as { message: string }).message
-                : 'Request failed.';
+        let message = 'Request failed.';
+        if (typeof body === 'object' && body !== null) {
+            const record = body as {
+                message?: unknown;
+                errors?: Record<string, string[]>;
+            };
+            const firstFieldError = record.errors
+                ? Object.values(record.errors).flat()[0]
+                : undefined;
+            if (typeof firstFieldError === 'string') {
+                message = firstFieldError;
+            } else if (typeof record.message === 'string') {
+                message = record.message;
+            }
+        }
         throw new AdminApiError(message, response.status);
     }
 
@@ -187,6 +195,13 @@ export async function generateInterviewSummary(
         `/api/admin/interviews/${interviewId}/generate-summary`,
         'POST',
     );
+}
+
+export async function adminLogin(
+    email: string,
+    password: string,
+): Promise<void> {
+    await adminMutate('/auth/login', 'POST', { email, password });
 }
 
 export async function adminLogout(): Promise<void> {

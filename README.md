@@ -91,6 +91,8 @@ Manual: open `invite:dev-url` → answer a question → check `answers` and `ai_
 
 ## Admin Google OAuth (F5)
 
+**Local without Google:** after `migrate:fresh --seed`, open `/admin` and sign in with `dev@idwasoft.com` / `password` (only `local` / `testing`; set `ADMIN_PASSWORD_LOGIN=false` to disable).
+
 Create a **Web** OAuth client in [Google Cloud Console](https://console.cloud.google.com/) with authorized redirect URI:
 
 `http://127.0.0.1:8000/auth/google/callback`
